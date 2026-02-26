@@ -1,0 +1,85 @@
+{
+  "name": "APWW Engagement Ingest",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "apww-engagement",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "0f57d417-24b6-4d84-a056-8e0063df9de3",
+      "name": "Event Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        280,
+        300
+      ],
+      "webhookId": "apww-engagement"
+    },
+    {
+      "parameters": {
+        "jsCode": "const nowIso = new Date().toISOString();\n\nconst parsePayload = (value) => {\n  if (typeof value === 'string') {\n    try {\n      return JSON.parse(value);\n    } catch {\n      return { raw_body: value };\n    }\n  }\n  if (value && typeof value === 'object') return value;\n  return {};\n};\n\nconst inbound = parsePayload($json.body ?? $json);\nconst event = String(inbound.event || '').trim().toLowerCase();\n\nconst scoreMap = {\n  page_view: 1,\n  artist_open: 3,\n  share_click: 5,\n  scroll_depth: Math.min(4, Math.max(1, Math.round((Number(inbound.depth) || 0) / 25))),\n  poll_vote: 7,\n  opt_in_submit: 10,\n};\n\nconst delta = Number(scoreMap[event] || 0);\nconst email = String(inbound.email || '').trim().toLowerCase();\nconst anonId = String(inbound.anon_id || '').trim();\nconst profileKey = email || anonId || `anon:${Date.now()}`;\n\nconst store = getWorkflowStaticData('global');\nstore.profiles = store.profiles || {};\nstore.events = store.events || [];\nstore.leads = store.leads || {};\n\nconst profile = store.profiles[profileKey] || {\n  key: profileKey,\n  score: 0,\n  counts: {},\n  artists: {},\n  firstSeenAt: nowIso,\n};\n\nprofile.score += delta;\nif (event) profile.counts[event] = (profile.counts[event] || 0) + 1;\nif (inbound.artist_id) profile.artists[inbound.artist_id] = (profile.artists[inbound.artist_id] || 0) + 1;\nprofile.lastSeenAt = nowIso;\nprofile.utm_source = inbound.utm_source || profile.utm_source || '';\nprofile.campaign = inbound.campaign || profile.campaign || '';\nprofile.url = inbound.url || profile.url || '';\n\nconst topArtist = Object.entries(profile.artists)\n  .sort((a, b) => b[1] - a[1])[0]?.[0] || null;\nprofile.topArtist = topArtist;\nstore.profiles[profileKey] = profile;\n\nconst eventRecord = {\n  event,\n  anon_id: anonId || null,\n  email: email || null,\n  artist_id: inbound.artist_id || null,\n  depth: inbound.depth ?? null,\n  platform: inbound.platform || null,\n  url: inbound.url || null,\n  utm_source: inbound.utm_source || '',\n  campaign: inbound.campaign || '',\n  received_at: nowIso,\n  event_timestamp: inbound.timestamp || nowIso,\n};\n\nstore.events.push(eventRecord);\nif (store.events.length > 5000) {\n  store.events = store.events.slice(-5000);\n}\n\nif (event === 'opt_in_submit' && email) {\n  const lead = store.leads[email] || {\n    email,\n    firstSeenAt: nowIso,\n    sources: {},\n    campaigns: {},\n    optInCount: 0,\n  };\n\n  lead.lastSeenAt = nowIso;\n  lead.optInCount += 1;\n\n  if (inbound.utm_source) {\n    lead.sources[inbound.utm_source] = (lead.sources[inbound.utm_source] || 0) + 1;\n  }\n\n  if (inbound.campaign) {\n    lead.campaigns[inbound.campaign] = (lead.campaigns[inbound.campaign] || 0) + 1;\n  }\n\n  lead.topArtist = topArtist || inbound.artist_id || lead.topArtist || null;\n  store.leads[email] = lead;\n}\n\nlet nextBestAction = 'continue_story';\nif (!email && (profile.counts.artist_open || 0) >= 2) nextBestAction = 'show_poll';\nif (!email && (profile.counts.poll_vote || 0) >= 1) nextBestAction = 'ask_opt_in';\nif (email && topArtist) nextBestAction = 'send_artist_followup';\nif ((profile.counts.share_click || 0) >= 1) nextBestAction = 'invite_ugc';\n\nreturn [{\n  json: {\n    ok: true,\n    accepted: Boolean(event),\n    event,\n    profile_key: profileKey,\n    score_delta: delta,\n    profile_score: profile.score,\n    top_artist: topArtist,\n    next_best_action: nextBestAction,\n    store_counts: {\n      profiles: Object.keys(store.profiles).length,\n      events: store.events.length,\n      leads: Object.keys(store.leads).length,\n    },\n  },\n}];"
+      },
+      "id": "10a71203-7953-4f2b-84f8-336f9f8f0335",
+      "name": "Normalize + Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        580,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "fd07f733-97f8-43a7-b246-11fc43063198",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Event Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize + Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize + Score": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "31636f1f-5d9b-4f02-9f33-d627b477dc79",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

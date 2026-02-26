@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afropop Worldwide — Women's History Month</title>
+  <!-- Preload the hero image so the first screen appears instantly -->
+  <link rel="preload" as="image" type="image/webp" href="./Gemini_Generated_Image_quarm3quarm3quar.webp">
+  <style>
+    /* ─── RESET & GLOBAL TYPOGRAPHY ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #000;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+      /* Ultra-smooth font rendering */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'kern' 1, 'liga' 1;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /*
+      CSS SCROLL SNAPPING
+      Native snap for ultra-low latency — no JS debouncing needed.
+    */
+    .scroll-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ─── SHARED FULL-SCREEN SECTION ─── */
+    .artist-card,
+    .intro-card {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      contain: layout style paint;
+    }
+
+    .artist-card {
+      cursor: pointer;
+    }
+
+    /* ─── SCROLL PROGRESS INDICATOR ─── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: rgba(255, 255, 255, 0.4);
+      z-index: 100;
+      transition: width 0.15s ease-out;
+      pointer-events: none;
+    }
+
+    /* ─── PAGE ENTRANCE ANIMATION ─── */
+    .scroll-container {
+      opacity: 0;
+      animation: pageEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Background Image — GPU-composited layer */
+    .bg-image {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      transform: translateZ(0) scale(1.04);
+      backface-visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+    }
+
+    .bg-image.is-loaded {
+      opacity: 1;
+    }
+
+    /* Skeleton shimmer shown while images load */
+    .bg-image::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.8s ease-in-out infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .bg-image.is-loaded::before {
+      display: none;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Radial overlay effect */
+    .artist-card::after,
+    .intro-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9) 15%, rgba(0, 0, 0, 0.4) 45%, transparent 75%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ─── INTRO CARD: WOMEN'S HISTORY MONTH ─── */
+    .intro-info {
+      position: relative;
+      color: #fff;
+      z-index: 10;
+      width: 320px;
+      max-width: 90vw;
+      letter-spacing: 0.025em;
+    }
+
+    /*
+      STAGGERED REVEAL — each child starts invisible and offset,
+      then cascades in via transition-delay when is-visible lands.
+      Pure CSS, zero JS, GPU-only (opacity + transform).
+    */
+    .intro-info > * {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .intro-card.is-visible .intro-info > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Cascade timing — each element 120ms after the last */
+    .intro-card.is-visible .intro-eyebrow    { transition-delay: 0.1s; }
+    .intro-card.is-visible .intro-title      { transition-delay: 0.22s; }
+    .intro-card.is-visible .intro-subtitle   { transition-delay: 0.34s; }
+    .intro-card.is-visible .intro-rule        { transition-delay: 0.46s; }
+    .intro-card.is-visible .intro-body        { transition-delay: 0.58s; }
+    .intro-card.is-visible .intro-footer      { transition-delay: 0.72s; }
+
+    .intro-eyebrow {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 14px;
+    }
+
+    .intro-title {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .intro-subtitle {
+      margin: 0 0 30px;
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .intro-body {
+      font-size: 11px;
+      line-height: 1.7;
+      letter-spacing: 0.015em;
+      color: rgba(255, 255, 255, 0.82);
+      margin: 0 0 24px;
+      font-weight: 300;
+    }
+
+    .intro-body p {
+      margin: 0 0 16px;
+    }
+
+    .intro-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .intro-rule {
+      width: 24px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.18);
+      border: none;
+      margin: 0 0 24px;
+    }
+
+    .intro-footer {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 1.5;
+    }
+
+    /* ─── NAMES SHOWCASE ─── */
+    .names-card {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: #000;
+      contain: layout style paint;
+    }
+
+    .names-cascade {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .names-cascade span {
+      display: block;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: rgba(255, 255, 255, 0.5);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.5s ease;
+      will-change: opacity, transform;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* Featured names — slightly larger, brighter */
+    .names-cascade span.feat {
+      font-size: 15px;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.8;
+    }
+
+    .names-card.is-visible .names-cascade span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger: 20 names, 70ms apart = ~1.4s cascade */
+    .names-card.is-visible .names-cascade span:nth-child(1)  { transition-delay: 0.08s; }
+    .names-card.is-visible .names-cascade span:nth-child(2)  { transition-delay: 0.15s; }
+    .names-card.is-visible .names-cascade span:nth-child(3)  { transition-delay: 0.22s; }
+    .names-card.is-visible .names-cascade span:nth-child(4)  { transition-delay: 0.29s; }
+    .names-card.is-visible .names-cascade span:nth-child(5)  { transition-delay: 0.36s; }
+    .names-card.is-visible .names-cascade span:nth-child(6)  { transition-delay: 0.43s; }
+    .names-card.is-visible .names-cascade span:nth-child(7)  { transition-delay: 0.50s; }
+    .names-card.is-visible .names-cascade span:nth-child(8)  { transition-delay: 0.57s; }
+    .names-card.is-visible .names-cascade span:nth-child(9)  { transition-delay: 0.64s; }
+    .names-card.is-visible .names-cascade span:nth-child(10) { transition-delay: 0.71s; }
+    .names-card.is-visible .names-cascade span:nth-child(11) { transition-delay: 0.78s; }
+    .names-card.is-visible .names-cascade span:nth-child(12) { transition-delay: 0.85s; }
+    .names-card.is-visible .names-cascade span:nth-child(13) { transition-delay: 0.92s; }
+    .names-card.is-visible .names-cascade span:nth-child(14) { transition-delay: 0.99s; }
+    .names-card.is-visible .names-cascade span:nth-child(15) { transition-delay: 1.06s; }
+    .names-card.is-visible .names-cascade span:nth-child(16) { transition-delay: 1.13s; }
+    .names-card.is-visible .names-cascade span:nth-child(17) { transition-delay: 1.20s; }
+    .names-card.is-visible .names-cascade span:nth-child(18) { transition-delay: 1.27s; }
+    .names-card.is-visible .names-cascade span:nth-child(19) { transition-delay: 1.34s; }
+    .names-card.is-visible .names-cascade span:nth-child(20) { transition-delay: 1.41s; }
+
+    /* ─── DIRECTORY CARD: WOMEN INDEX ─── */
+    .directory-card {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: #0a0a0a;
+      contain: layout style paint;
+    }
+
+    .directory-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.5) 55%, transparent 80%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .directory-inner {
+      position: relative;
+      z-index: 10;
+      width: 280px;
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .directory-inner::-webkit-scrollbar { display: none; }
+
+    .directory-eyebrow {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .directory-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .directory-list li {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .directory-list li:last-child {
+      border-bottom: none;
+    }
+
+    .directory-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.75);
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: color 0.25s ease;
+    }
+
+    .directory-link:hover {
+      color: #fff;
+    }
+
+    .directory-link-name {
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .directory-link-origin {
+      font-weight: 300;
+      font-size: 9px;
+      color: rgba(255, 255, 255, 0.3);
+      text-align: right;
+      letter-spacing: 0.04em;
+      transition: color 0.25s ease;
+    }
+
+    .directory-link:hover .directory-link-origin {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Stagger for directory items */
+    .directory-inner > * {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .directory-card.is-visible .directory-inner > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .directory-card.is-visible .directory-eyebrow { transition-delay: 0.1s; }
+    .directory-card.is-visible .directory-list     { transition-delay: 0.25s; }
+
+    /* ─── ARTIST TEXT ─── */
+    .artist-info {
+      position: relative;
+      color: white;
+      z-index: 10;
+      width: 200px;
+      font-size: 10px;
+      line-height: 1.3;
+      letter-spacing: 0.025em;
+    }
+
+    /* Staggered reveal for artist cards — same pattern, zero weight */
+    .artist-info > * {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .artist-card.is-visible .artist-info > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .artist-card.is-visible .artist-name                  { transition-delay: 0.15s; }
+    .artist-card.is-visible .artist-title                 { transition-delay: 0.25s; }
+    .artist-card.is-visible .info-block:first-of-type     { transition-delay: 0.38s; }
+    .artist-card.is-visible .info-block:last-of-type      { transition-delay: 0.50s; }
+
+    /* Text Formatting */
+    .artist-info p { margin: 0; }
+    .artist-name { font-weight: 500; }
+    .artist-title { margin-bottom: 18px !important; font-weight: 500; color: rgba(255,255,255,0.55); }
+    .info-block { margin-bottom: 18px; }
+    .row { display: flex; margin-bottom: 4px; gap: 8px; }
+    .row.justify-between { justify-content: space-between; }
+    .label { width: 46px; flex-shrink: 0; }
+    .value { flex: 1; min-width: 0; }
+
+    /* ─── DISSOLVE TRANSITION ─── */
+    .is-dissolving .artist-info > *,
+    .is-dissolving .directory-inner > * {
+      opacity: 0 !important;
+      transform: translateY(-8px) !important;
+      transition: opacity 0.28s ease-out, transform 0.28s ease-out !important;
+    }
+    .is-dissolving .artist-info > *:nth-child(1) { transition-delay: 0s !important; }
+    .is-dissolving .artist-info > *:nth-child(2) { transition-delay: 0.03s !important; }
+    .is-dissolving .artist-info > *:nth-child(3) { transition-delay: 0.06s !important; }
+    .is-dissolving .artist-info > *:nth-child(4) { transition-delay: 0.09s !important; }
+
+    .is-dissolving .directory-inner > *:nth-child(1) { transition-delay: 0.03s !important; }
+    .is-dissolving .directory-inner > *:nth-child(2) { transition-delay: 0s !important; }
+
+    /* ─── BIO MODAL ─── */
+    .bio-modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      z-index: 80;
+      background: #000;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .bio-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .bio-modal-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+      z-index: 1;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      filter: grayscale(100%) contrast(118%) brightness(58%) blur(1.2px);
+      transform: scale(1.03);
+    }
+
+    .bio-modal-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.85) 10%, rgba(0, 0, 0, 0.7) 60%, #000 100%);
+      z-index: 2;
+    }
+
+    .bio-content {
+      position: relative;
+      z-index: 3;
+      color: #fff;
+      width: 100%;
+      max-width: 340px;
+      max-height: calc(100vh - 40px);
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Staggered bio reveal — children animate in via keyframes, only when open */
+    .bio-content > * {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .bio-modal.is-open .bio-content > * {
+      animation: bioChildIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes bioChildIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bio-modal.is-open .bio-content > .bio-header       { animation-delay: 0.08s; }
+    .bio-modal.is-open .bio-content > .bio-text         { animation-delay: 0.24s; }
+    .bio-modal.is-open .bio-content > .bio-links        { animation-delay: 0.36s; }
+    .bio-modal.is-open .bio-content > :last-child       { animation-delay: 0.48s; }
+
+    .bio-header {
+      margin-bottom: 30px;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .bio-title {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .bio-subtitle {
+      margin: 0;
+      font-weight: 400;
+      color: #999;
+    }
+
+    .bio-text p {
+      margin-top: 0;
+      margin-bottom: 20px;
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      font-weight: 300;
+    }
+
+    .bio-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .bio-links {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bio-links-title {
+      margin: 0;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .bio-source {
+      display: inline-block;
+      margin: 0;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 1px;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .bio-source:hover {
+      color: rgba(255, 255, 255, 0.7);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-link {
+      display: inline-block;
+      margin-top: 40px;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0 0 2px;
+      background: transparent;
+      font: inherit;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      border-color: #fff;
+    }
+
+    .scroll-container.is-locked {
+      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    body.bio-open {
+      overflow: hidden;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-btn {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      z-index: 12;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .artist-card.is-visible .share-btn {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.6s;
+    }
+
+    .share-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: scale(1.08);
+    }
+
+    .share-btn:active {
+      transform: scale(0.95);
+    }
+
+    .share-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Bio modal share button */
+    .bio-share-btn {
+      display: inline-block;
+      margin-top: 12px;
+      margin-left: 16px;
+      color: rgba(255, 255, 255, 0.4);
+      background: transparent;
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0 0 2px;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .bio-share-btn:hover {
+      color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ─── TOAST NOTIFICATION ─── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 20px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ─── POLL CTA PILL ─── */
+    .poll-cta {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 90;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 10px 22px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.25s ease;
+    }
+
+    .poll-cta.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .poll-cta:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* ─── POLL MODAL ─── */
+    .poll-modal {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.97);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .poll-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .poll-content {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+    }
+
+    .poll-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .poll-close:hover {
+      color: #fff;
+    }
+
+    .poll-title {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .poll-subtitle {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.45);
+      margin: 0 0 28px;
+    }
+
+    .poll-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .poll-option {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 16px 10px;
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+      text-align: center;
+    }
+
+    .poll-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .poll-option:active {
+      transform: scale(0.97);
+    }
+
+    .poll-option.is-selected {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .poll-option-name {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    .poll-option-sub {
+      display: block;
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Poll thank-you state */
+    .poll-thanks {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .poll-thanks.is-active {
+      display: block;
+    }
+
+    .poll-thanks-title {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .poll-thanks-sub {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+
+    /* ─── OPT-IN FORM ─── */
+    .optin-modal {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.97);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .optin-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .optin-content {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .optin-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .optin-close:hover {
+      color: #fff;
+    }
+
+    .optin-title {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+
+    .optin-subtitle {
+      font-size: 10px;
+      font-weight: 300;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0 0 24px;
+    }
+
+    .optin-form {
+      display: flex;
+      gap: 8px;
+    }
+
+    .optin-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: #fff;
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .optin-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .optin-input:focus {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .optin-submit {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 10px 18px;
+      color: #fff;
+      font: inherit;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+
+    .optin-submit:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .optin-error {
+      font-size: 9px;
+      color: rgba(255, 120, 120, 0.8);
+      margin: 8px 0 0;
+      display: none;
+    }
+
+    .optin-error.is-visible {
+      display: block;
+    }
+
+    /* Opt-in confirmed state */
+    .optin-confirmed {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .optin-confirmed.is-active {
+      display: block;
+    }
+
+    .optin-confirmed-title {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .optin-confirmed-sub {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="scroll-container">
+
+    <!-- INTRO: WOMEN'S HISTORY MONTH -->
+    <div class="intro-card" data-intro>
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_quarm3quarm3quar.webp"></div>
+
+      <div class="intro-info">
+        <span class="intro-eyebrow">Afropop Worldwide</span>
+        <h1 class="intro-title">Women's History Month</h1>
+        <p class="intro-subtitle">Celebrating the Women of African Music</p>
+
+        <hr class="intro-rule">
+
+        <div class="intro-body">
+          <p>Every March, we honor the women whose voices, vision, and courage shaped the sound of a continent and moved the world. From the stages of Lagos to the studios of Johannesburg, from exile to the Grammy podium, these artists carried forward traditions while breaking every boundary placed before them.</p>
+          <p>This collection highlights some of the pioneering figures in African and diasporic music — artists who used song as resistance, celebration, and bridge. Their stories remind us that the history of popular music is, at its heart, a history of bold women.</p>
+        </div>
+
+        <div class="intro-footer">
+          Scroll to explore artist profiles
+        </div>
+      </div>
+    </div>
+
+    <!-- NAMES SHOWCASE: Roll call -->
+    <div class="names-card" data-intro>
+      <div class="names-cascade">
+        <span>Aida Samb</span>
+        <span class="feat">Angélique Kidjo</span>
+        <span>Cesária Évora</span>
+        <span>Dobet Gnahoré</span>
+        <span>Elida Almeida</span>
+        <span class="feat">Fatoumata Diawara</span>
+        <span>Fairuz</span>
+        <span class="feat">Miriam Makeba</span>
+        <span>Nneka</span>
+        <span class="feat">Oumou Sangaré</span>
+        <span>Rokia Koné</span>
+        <span>Rokia Traoré</span>
+        <span>Sabah</span>
+        <span>Sho Madjozi</span>
+        <span>Shungudzo</span>
+        <span class="feat">Tems</span>
+        <span>Tiwa Savage</span>
+        <span>Toshi Reagon</span>
+        <span class="feat">Umm Kulthum</span>
+        <span>Yemi Alade</span>
+      </div>
+    </div>
+
+    <!-- DIRECTORY: 20 INFLUENTIAL WOMEN -->
+    <div class="directory-card" data-intro>
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_quarm3quarm3quar.webp" data-loaded-opacity="0.12"></div>
+
+      <div class="directory-inner">
+        <span class="directory-eyebrow">20 Influential Women — Afropop Worldwide</span>
+        <ul class="directory-list">
+          <li><button class="directory-link" data-artist="aida_samb"><span class="directory-link-name">Aida Samb</span><span class="directory-link-origin">Senegal</span></button></li>
+          <li><button class="directory-link" data-artist="ang_lique_kidjo"><span class="directory-link-name">Angélique Kidjo</span><span class="directory-link-origin">Benin</span></button></li>
+          <li><button class="directory-link" data-artist="ces_ria_vora"><span class="directory-link-name">Cesária Évora</span><span class="directory-link-origin">Cape Verde</span></button></li>
+          <li><button class="directory-link" data-artist="dobet_gnahor"><span class="directory-link-name">Dobet Gnahoré</span><span class="directory-link-origin">Côte d'Ivoire</span></button></li>
+          <li><button class="directory-link" data-artist="elida_almeida"><span class="directory-link-name">Elida Almeida</span><span class="directory-link-origin">Cape Verde</span></button></li>
+          <li><button class="directory-link" data-artist="fairuz"><span class="directory-link-name">Fairuz</span><span class="directory-link-origin">Lebanon</span></button></li>
+          <li><button class="directory-link" data-artist="fatoumata_diawara"><span class="directory-link-name">Fatoumata Diawara</span><span class="directory-link-origin">Mali</span></button></li>
+          <li><button class="directory-link" data-artist="miriam_makeba"><span class="directory-link-name">Miriam Makeba</span><span class="directory-link-origin">South Africa</span></button></li>
+          <li><button class="directory-link" data-artist="nneka"><span class="directory-link-name">Nneka</span><span class="directory-link-origin">Nigeria</span></button></li>
+          <li><button class="directory-link" data-artist="oumou_sangar"><span class="directory-link-name">Oumou Sangaré</span><span class="directory-link-origin">Mali</span></button></li>
+          <li><button class="directory-link" data-artist="rokia_kon"><span class="directory-link-name">Rokia Koné</span><span class="directory-link-origin">Mali</span></button></li>
+          <li><button class="directory-link" data-artist="rokia_traor"><span class="directory-link-name">Rokia Traoré</span><span class="directory-link-origin">Mali</span></button></li>
+          <li><button class="directory-link" data-artist="sabah"><span class="directory-link-name">Sabah</span><span class="directory-link-origin">Lebanon</span></button></li>
+          <li><button class="directory-link" data-artist="sho_madjozi"><span class="directory-link-name">Sho Madjozi</span><span class="directory-link-origin">South Africa</span></button></li>
+          <li><button class="directory-link" data-artist="shungudzo"><span class="directory-link-name">Shungudzo</span><span class="directory-link-origin">Zimbabwe / US</span></button></li>
+          <li><button class="directory-link" data-artist="tems"><span class="directory-link-name">Tems</span><span class="directory-link-origin">Nigeria</span></button></li>
+          <li><button class="directory-link" data-artist="tiwa_savage"><span class="directory-link-name">Tiwa Savage</span><span class="directory-link-origin">Nigeria</span></button></li>
+          <li><button class="directory-link" data-artist="toshi_reagon"><span class="directory-link-name">Toshi Reagon</span><span class="directory-link-origin">United States</span></button></li>
+          <li><button class="directory-link" data-artist="umm_kulthum"><span class="directory-link-name">Umm Kulthum</span><span class="directory-link-origin">Egypt</span></button></li>
+          <li><button class="directory-link" data-artist="yemi_alade"><span class="directory-link-name">Yemi Alade</span><span class="directory-link-origin">Nigeria</span></button></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ARTIST 1: FELA KUTI -->
+    <div class="artist-card" data-artist="fela">
+      <!-- YOUR REQUESTED IMAGE RETURNED HERE -->
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_o4qq50o4qq50o4qq.webp"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">FELA KUTI</p>
+        <p class="artist-title">AFROBEAT REVOLUTIONARY</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">15 OCT 1938</span>
+          </div>
+          <div class="row">
+            <span class="label">STYLE.</span>
+            <span class="value">AFROBEAT / JAZZ / FUNK</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">MUSICIAN & ACTIVIST</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>01</span>
+          </div>
+          <div class="row">
+            <span class="value">AFROBEAT PIONEER</span>
+          </div>
+          <div class="row">
+            <span class="value">USED MUSIC TO CHALLENGE</span>
+          </div>
+          <div class="row">
+            <span class="value">CORRUPTION & OPPRESSION.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST 2: ANGELIQUE KIDJO -->
+    <div class="artist-card" data-artist="kidjo">
+      <!-- Local image from your folder -->
+      <div class="bg-image" data-bg="./kidjo.jpg"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">ANGELIQUE KIDJO</p>
+        <p class="artist-title">GLOBAL MUSIC POWERHOUSE</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">14 JUL 1960</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">OUIDAH, BENIN</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & ACTIVIST</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>02</span>
+          </div>
+          <div class="row">
+            <span class="value">MULTI-GRAMMY WINNER</span>
+          </div>
+          <div class="row">
+            <span class="value">UNICEF GOODWILL AMB.</span>
+          </div>
+          <div class="row">
+            <span class="value">SINCE 2002.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST 3: MIRIAM MAKEBA -->
+    <div class="artist-card" data-artist="makeba">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_lpw3i5lpw3i5lpw3.webp"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">MIRIAM MAKEBA</p>
+        <p class="artist-title">MAMA AFRICA</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">04 MAR 1932</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">PROSPECT, JOHANNESBURG</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & ACTIVIST</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>03</span>
+          </div>
+          <div class="row">
+            <span class="value">GRAMMY WIN WITH BELAFONTE</span>
+          </div>
+          <div class="row">
+            <span class="value">ANTI-APARTHEID VOICE</span>
+          </div>
+          <div class="row">
+            <span class="value">RETURNED TO SA IN 1990.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST 4: DRAFT -->
+    <div class="artist-card" data-artist="ndour">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_60j3oa60j3oa60j3.webp"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">YOUSSOU N'DOUR</p>
+        <p class="artist-title">SENEGAL'S MBALAX ICON</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">01 OCT 1959</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">DAKAR, SENEGAL</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & COMPOSER</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>04</span>
+          </div>
+          <div class="row">
+            <span class="value">TOOK MBALAX WORLDWIDE</span>
+          </div>
+          <div class="row">
+            <span class="value">GRAMMY WIN: EGYPT (2005)</span>
+          </div>
+          <div class="row">
+            <span class="value">MINISTER 2012-2013.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST 5: KING SUNNY ADE -->
+    <div class="artist-card" data-artist="sunnyade">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_8we2pe8we2pe8we2.webp"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">KING SUNNY ADE</p>
+        <p class="artist-title">KING OF JUJU</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">22 SEP 1946</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">OSHOGBO, NIGERIA</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">JUJU MUSIC PIONEER</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>05</span>
+          </div>
+          <div class="row">
+            <span class="value">GLOBALIZED NIGERIAN JUJU</span>
+          </div>
+          <div class="row">
+            <span class="value">ISLAND ERA: JUJU MUSIC</span>
+          </div>
+          <div class="row">
+            <span class="value">2 GRAMMY NOMINATIONS.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST 6: BURNA BOY -->
+    <div class="artist-card" data-artist="burna">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_2fyp842fyp842fyp.webp"></div>
+      
+      <div class="artist-info">
+        <p class="artist-name">BURNA BOY</p>
+        <p class="artist-title">AFRO-FUSION TRAILBLAZER</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">02 JUL 1991</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">PORT HARCOURT, NG</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & SONGWRITER</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>06</span>
+          </div>
+          <div class="row">
+            <span class="value">FIRST CAREER GRAMMY WIN</span>
+          </div>
+          <div class="row">
+            <span class="value">TWICE AS TALL (63RD)</span>
+          </div>
+          <div class="row">
+            <span class="value">BEST GLOBAL ALBUM 2021.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bio-modal" id="bioModal" aria-hidden="true">
+    <div class="bio-modal-bg" id="bioModalBg"></div>
+    <div class="bio-modal-overlay" id="bioBackdrop"></div>
+    <div class="bio-content">
+      <div class="bio-header">
+        <p class="bio-title" id="bioTitle">ARTICLE BIO</p>
+        <p class="bio-subtitle" id="bioSubtitle">ARTIST BACKGROUND & CONTEXT</p>
+      </div>
+      <div class="bio-text" id="bioText"></div>
+      <p class="bio-links-title" id="bioLinksTitle" hidden>Relevant Articles</p>
+      <div class="bio-links" id="bioLinks"></div>
+      <div style="display:flex;align-items:center;gap:0;">
+        <button class="nav-link" id="closeBioBtn" type="button">RETURN TO ARTISTS</button>
+        <button class="bio-share-btn" id="bioShareBtn" type="button">Share</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Poll CTA pill — appears after 2+ bio opens -->
+  <button class="poll-cta" id="pollCta">Whose story speaks to you?</button>
+
+  <!-- Poll modal -->
+  <div class="poll-modal" id="pollModal">
+    <div class="poll-content">
+      <button class="poll-close" id="pollClose" type="button">&times;</button>
+      <div id="pollVoteView">
+        <p class="poll-title">Whose Story Speaks to You?</p>
+        <p class="poll-subtitle">Tap the artist who resonates most</p>
+        <div class="poll-grid" id="pollGrid"></div>
+      </div>
+      <div class="poll-thanks" id="pollThanks">
+        <p class="poll-thanks-title">Your Voice Matters</p>
+        <p class="poll-thanks-sub">Thank you for sharing. Stay connected?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Opt-in modal -->
+  <div class="optin-modal" id="optinModal">
+    <div class="optin-content">
+      <button class="optin-close" id="optinClose" type="button">&times;</button>
+      <div id="optinFormView">
+        <p class="optin-title">Stay Connected</p>
+        <p class="optin-subtitle">Get artist stories, new discoveries, and community picks — straight to your inbox.</p>
+        <form class="optin-form" id="optinForm">
+          <input class="optin-input" id="optinEmail" type="email" placeholder="Your email" required autocomplete="email">
+          <button class="optin-submit" type="submit">Join</button>
+        </form>
+        <p class="optin-error" id="optinError">Please enter a valid email address</p>
+      </div>
+      <div class="optin-confirmed" id="optinConfirmed">
+        <p class="optin-confirmed-title">You're In</p>
+        <p class="optin-confirmed-sub">Watch your inbox for artist stories and discoveries.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ─── n8n EVENT TRACKER (sendBeacon, zero dependencies) ─── */
+    const N8N_WEBHOOK = 'https://ceyvion.app.n8n.cloud/webhook/apww-engagement';
+
+    function getAnonId() {
+      let id = localStorage.getItem('apww_anon');
+      if (!id) { id = crypto.randomUUID(); localStorage.setItem('apww_anon', id); }
+      return id;
+    }
+
+    const _utmParams = new URLSearchParams(location.search);
+
+    function trackEvent(event, data) {
+      const payload = JSON.stringify({
+        event,
+        anon_id: getAnonId(),
+        timestamp: new Date().toISOString(),
+        url: location.href,
+        utm_source: _utmParams.get('utm_source') || '',
+        campaign: _utmParams.get('campaign') || '',
+        ...data
+      });
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(N8N_WEBHOOK, payload);
+        } else {
+          fetch(N8N_WEBHOOK, { method: 'POST', body: payload, keepalive: true });
+        }
+      } catch (_) { /* silent fail — tracking should never break UX */ }
+    }
+
+    /* ─── TOAST HELPER ─── */
+    function showToast(msg, ms) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('is-visible');
+      setTimeout(() => t.classList.remove('is-visible'), ms || 2200);
+    }
+
+    /* ─── SHARE HELPER ─── */
+    function shareArtist(artistKey, artistName) {
+      const url = location.origin + location.pathname + '?artist=' + artistKey + '&utm_source=share';
+      const title = artistName + ' — Afropop Worldwide';
+      const text = 'Discover the story of ' + artistName + ' on Afropop Worldwide.';
+
+      trackEvent('share_click', { artist_id: artistKey, platform: navigator.share ? 'native' : 'clipboard' });
+
+      if (navigator.share) {
+        navigator.share({ title, text, url }).catch(function() {});
+      } else {
+        navigator.clipboard.writeText(url).then(function() {
+          showToast('Link copied to clipboard');
+        }).catch(function() {
+          showToast('Could not copy link');
+        });
+      }
+    }
+
+    // Intersection Observer:
+    // This is the most performance-friendly way to trigger animations on scroll.
+    // It watches the elements natively and adds the 'is-visible' class when they enter the screen,
+    // triggering the smooth CSS fade-up for the text.
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const scrollContainer = document.querySelector('.scroll-container');
+      const scrollProgress = document.getElementById('scrollProgress');
+
+      // ── Track page view ──
+      trackEvent('page_view');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { root: scrollContainer, rootMargin: '0px', threshold: 0.5 });
+
+      /* ─── LAZY LOADING: Load bg images when near viewport ─── */
+      const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bgEl = entry.target;
+            const src = bgEl.dataset.bg;
+            if (!src) return;
+
+            const applyLoadedState = (url) => {
+              bgEl.style.backgroundImage = `url('${url}')`;
+              const maxOpacity = bgEl.dataset.loadedOpacity;
+              if (maxOpacity) {
+                bgEl.style.opacity = maxOpacity;
+              }
+              bgEl.classList.add('is-loaded');
+            };
+
+            const fallbackCandidates = [];
+            if (src.endsWith('.webp')) {
+              fallbackCandidates.push(src.replace(/\.webp$/i, '.png'));
+              fallbackCandidates.push(src.replace(/\.webp$/i, '.jpg'));
+            }
+
+            const tryLoad = (url, fallbacks) => {
+              const img = new Image();
+              img.onload = () => applyLoadedState(url);
+              img.onerror = () => {
+                const next = fallbacks.shift();
+                if (next) {
+                  tryLoad(next, fallbacks);
+                } else {
+                  // Avoid infinite shimmer if all loads fail.
+                  bgEl.classList.add('is-loaded');
+                }
+              };
+              img.src = url;
+            };
+
+            tryLoad(src, fallbackCandidates);
+            lazyObserver.unobserve(bgEl);
+          }
+        });
+      }, { root: scrollContainer, rootMargin: '200px 0px' }); // Start loading 200px before entering viewport
+
+      document.querySelectorAll('.bg-image[data-bg]').forEach(bg => lazyObserver.observe(bg));
+
+      /* ─── SCROLL PROGRESS BAR ─── */
+      scrollContainer.addEventListener('scroll', () => {
+        const scrollTop = scrollContainer.scrollTop;
+        const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        scrollProgress.style.width = progress + '%';
+      }, { passive: true });
+
+      /* ─── SUBTLE PARALLAX on bg images ─── */
+      scrollContainer.addEventListener('scroll', () => {
+        const scrollTop = scrollContainer.scrollTop;
+        const viewH = scrollContainer.clientHeight;
+        document.querySelectorAll('.bg-image.is-loaded').forEach(bg => {
+          const card = bg.parentElement;
+          const rect = card.getBoundingClientRect();
+          // Only apply parallax to cards near the viewport
+          if (rect.bottom > -viewH && rect.top < viewH * 2) {
+            const offset = (rect.top / viewH) * -12; // Subtle: max 12px shift
+            bg.style.transform = `translateZ(0) scale(1.04) translateY(${offset}px)`;
+          }
+        });
+      }, { passive: true });
+      const bioModal = document.getElementById('bioModal');
+      const bioModalBg = document.getElementById('bioModalBg');
+      const bioBackdrop = document.getElementById('bioBackdrop');
+      const closeBioBtn = document.getElementById('closeBioBtn');
+      const bioTitle = document.getElementById('bioTitle');
+      const bioSubtitle = document.getElementById('bioSubtitle');
+      const bioText = document.getElementById('bioText');
+      const bioLinksTitle = document.getElementById('bioLinksTitle');
+      const imageCache = {};
+      let bioRenderToken = 0;
+
+      const ARTIST_BIOS = {
+        // ── Original artist profiles ──
+        fela: {
+          name: 'FELA KUTI',
+          subtitle: 'AFROBEAT REVOLUTIONARY',
+          image: './Gemini_Generated_Image_o4qq50o4qq50o4qq.webp',
+          paragraphs: [
+            'Born in Abeokuta, Nigeria, Fela studied music in London and combined highlife, jazz, Yoruba rhythms, and funk into a new sound later known as Afrobeat.',
+            'His songs were politically direct, attacking state violence and corruption while building Kalakuta Republic as a radical cultural space.',
+            'Despite repeated raids, arrests, and censorship, he remained one of Africa\'s most influential artists and a global symbol of musical resistance.'
+          ],
+          links: [
+            { label: 'Fela Kuti — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Fela-Kuti' }
+          ]
+        },
+        kidjo: {
+          name: 'ANGELIQUE KIDJO',
+          subtitle: 'GLOBAL MUSIC POWERHOUSE',
+          image: './kidjo.jpg',
+          paragraphs: [
+            'Born in Ouidah, Benin, Angelique Kidjo built an international career by blending West African traditions with jazz, funk, and pop.',
+            'Her voice and live performances helped expand African popular music across global stages and generations.',
+            'She is also known for humanitarian advocacy, including long service as a UNICEF Goodwill Ambassador.'
+          ],
+          links: [
+            { label: 'Angélique Kidjo — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Angelique-Kidjo' },
+            { label: 'Angélique Kidjo — Afropop Worldwide', url: 'https://www.afropop.org/articles/angelique-kidjo' }
+          ]
+        },
+        makeba: {
+          name: 'MIRIAM MAKEBA',
+          subtitle: 'MAMA AFRICA',
+          image: './Gemini_Generated_Image_lpw3i5lpw3i5lpw3.webp',
+          paragraphs: [
+            'Miriam Makeba was born in 1932 near Johannesburg and became one of the first African artists to gain major worldwide visibility.',
+            'After speaking against apartheid at the United Nations, she lived in exile while continuing her music and activism.',
+            'She won a Grammy with Harry Belafonte and later returned to South Africa in 1990 after years of political exile.'
+          ],
+          links: [
+            { label: 'Miriam Makeba — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Miriam-Makeba' },
+            { label: 'Miriam Makeba — South African History Online', url: 'https://www.sahistory.org.za/people/miriam-makeba' }
+          ]
+        },
+        ndour: {
+          name: 'YOUSSOU N\'DOUR',
+          subtitle: 'SENEGAL\'S MBALAX ICON',
+          image: './Gemini_Generated_Image_60j3oa60j3oa60j3.webp',
+          paragraphs: [
+            'Born in Dakar in 1959, Youssou N\'Dour became the leading global ambassador of mbalax, rooted in Senegalese sabar rhythms.',
+            'His collaborations connected West African music with international pop and world music audiences.',
+            'He won a Grammy for Egypt and served as Senegal\'s minister of culture and tourism from 2012 to 2013.'
+          ],
+          links: [
+            { label: 'Youssou N\'Dour — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Youssou-NDour' },
+            { label: 'GRAMMY: Youssou N\'Dour', url: 'https://www.grammy.com/artists/youssou-ndour/17140' }
+          ]
+        },
+        sunnyade: {
+          name: 'KING SUNNY ADE',
+          subtitle: 'KING OF JUJU',
+          image: './Gemini_Generated_Image_8we2pe8we2pe8we2.webp',
+          paragraphs: [
+            'King Sunny Ade helped modernize and internationalize Nigerian juju with layered guitars, talking drums, and Yoruba praise traditions.',
+            'His 1980s releases, including Juju Music and Synchro System, introduced many global listeners to contemporary Nigerian sound.',
+            'He became one of the first Nigerian stars with sustained international chart and touring visibility, earning Grammy nominations.'
+          ],
+          links: [
+            { label: 'King Sunny Adé — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/King-Sunny-Ade' },
+            { label: 'GRAMMY: King Sunny Adé', url: 'https://www.grammy.com/artists/king-sunny-ade/54' }
+          ]
+        },
+        burna: {
+          name: 'BURNA BOY',
+          subtitle: 'AFRO-FUSION TRAILBLAZER',
+          image: './Gemini_Generated_Image_2fyp842fyp842fyp.webp',
+          paragraphs: [
+            'Born in Port Harcourt in 1991, Burna Boy developed an Afro-fusion style that combines Afrobeats, dancehall, hip-hop, and reggae.',
+            'His global rise made him a defining voice of contemporary African popular music and a major arena performer.',
+            'He won his first Grammy in 2021 for Twice As Tall, in the Best Global Music Album category.'
+          ],
+          links: [
+            { label: 'Burna Boy — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Burna-Boy' },
+            { label: 'GRAMMY: Burna Boy Wins (2021)', url: 'https://www.grammy.com/news/burna-boy-wins-best-global-music-album-twice-tall-2021-grammy-awards-show' }
+          ]
+        },
+
+        // ── Women's History Month: 20 Influential Women ──
+        aida_samb: {
+          name: 'AIDA SAMB',
+          subtitle: 'SENEGALESE MBALAX RISING STAR',
+          wiki: 'Aida Samb',
+          paragraphs: [
+            'Aida Samb is a Senegalese mbalax singer whose performance at Visa For Music 2019 in Rabat drew attention from Afropop Worldwide as a standout of the festival.',
+            'Her sound carries echoes of classic Senegalese vocal tradition, with family lineage connected to El Hadj Samba Diabaré Samb.',
+            'Her debut album Sarabaa won a West African traditional music artist award at the 2012 Kora Music Awards in Abidjan.'
+          ],
+          links: [
+            { label: 'Field Report: Visa For Music 2019 — Afropop', url: 'https://www.afropop.org/articles/field-report-rabat-morocco-visa-for-music-2019' }
+          ]
+        },
+        ang_lique_kidjo: {
+          name: 'ANGÉLIQUE KIDJO',
+          subtitle: 'FIVE-TIME GRAMMY WINNER',
+          wiki: 'Angélique Kidjo',
+          paragraphs: [
+            'Angélique Kidjo broke onto the global scene with Logozo in 1991 and has spent decades crossing genres from Afropop to funk to jazz.',
+            'She has won five Grammy Awards and is recognized as a leading contender for what Afropop calls the Queen of Afropop title.',
+            'Beyond music, she founded the Batonga Foundation supporting education for girls and women across Africa, and has served as a UNICEF Goodwill Ambassador.'
+          ],
+          links: [
+            { label: 'Might Angélique Kidjo Be the True Queen of Afropop? — Afropop', url: 'https://www.afropop.org/articles/might-angelique-kidjo-be-the-righful-queen-of-afropop' },
+            { label: 'Angélique Kidjo: Spirit Rising — Afropop', url: 'https://www.afropop.org/articles/angelique-kidjo' }
+          ]
+        },
+        ces_ria_vora: {
+          name: 'CESÁRIA ÉVORA',
+          subtitle: 'THE BAREFOOT DIVA',
+          wiki: 'Cesária Évora',
+          paragraphs: [
+            'Cesária Évora became the global face of Cape Verdean morna and coladeira, carrying the melancholy and warmth of the islands to audiences worldwide.',
+            'Afropop Worldwide dedicated an Afropop Classic tribute program to her legacy, signaling her foundational influence on Cape Verdean song.',
+            'Her voice opened doors for a generation of Cape Verdean women singers who followed.'
+          ],
+          links: [
+            { label: 'A Tribute to Cesária Évora — Afropop', url: 'https://afropop.org/audio-programs/a-tribute-to-cesaria-evora' },
+            { label: 'Cesária Évora\'s Last Concert, Lisbon 2010 — Afropop', url: 'https://www.afropop.org/articles/quarantunes-cesaria-evoras-last-concert-lisbon-2010' }
+          ]
+        },
+        dobet_gnahor: {
+          name: 'DOBET GNAHORÉ',
+          subtitle: 'IVORIAN VOICE FOR EMANCIPATION',
+          wiki: 'Dobet Gnahoré',
+          paragraphs: [
+            'Dobet Gnahoré is an Ivorian singer and performer whose work carries strong messages of women\'s emancipation and community responsibility.',
+            'Afropop\'s interview coverage around her album Couleur explored how she channeled the isolation of the pandemic into creative and ethical purpose.',
+            'She is featured in Afropop\'s Women Warriors program alongside other pioneering voices in African and diasporic music.'
+          ],
+          links: [
+            { label: 'Dobet Gnahoré Talks Pandemic, Vision and New Album — Afropop', url: 'https://afropop.org/articles/dobet-gnahor%C3%A9-talks-pandemic-vision-and-new-album-coleur' },
+            { label: 'Afropop\'s Women Warriors — Afropop', url: 'https://www.afropop.org/audio-programs/afropops-women-warriors' }
+          ]
+        },
+        elida_almeida: {
+          name: 'ELIDA ALMEIDA',
+          subtitle: 'CAPE VERDE\'S NEW GENERATION',
+          wiki: 'Elida Almeida',
+          paragraphs: [
+            'Elida Almeida represents Cape Verde\'s post-Cesária generation of women musicians, carrying forward the islands\' vocal traditions while experimenting across styles.',
+            'In her Afropop interview around her third album Kebrada, she spoke about maintaining artistic identity while pushing creative boundaries.',
+            'She is part of a broader wave of younger Cape Verdean artists redefining what the music of the archipelago can sound like.'
+          ],
+          links: [
+            { label: 'Elida Almeida Discusses Kebrada — Afropop', url: 'https://www.afropop.org/articles/elida-almeida-discusses-her-third-album-kebrada' }
+          ]
+        },
+        fairuz: {
+          name: 'FAIRUZ',
+          subtitle: 'ICON OF LEBANESE SONG',
+          wiki: 'Fairuz',
+          paragraphs: [
+            'Fairuz is one of the most celebrated singers in the Arabic-speaking world, whose voice became synonymous with modern Lebanese culture.',
+            'Afropop\'s Hip Deep series dedicated significant coverage to her legacy, treating her as a central cultural figure of 20th-century Lebanese song.',
+            'Her artistry spanned classical Arabic traditions and theatrical innovation, anchoring the cultural identity of a nation through decades of upheaval.'
+          ],
+          links: [
+            { label: 'Kenneth Habib on Fairuz: A Woman for All Seasons — Afropop', url: 'https://www.afropop.org/articles/hip-deep-interview-kenneth-habib-on-fairuz-a-woman-for-all-seasons' }
+          ]
+        },
+        fatoumata_diawara: {
+          name: 'FATOUMATA DIAWARA',
+          subtitle: 'MALI\'S GLOBAL AMBASSADOR',
+          wiki: 'Fatoumata Diawara',
+          paragraphs: [
+            'Fatoumata Diawara is one of the most internationally in-demand Malian artists, blending traditional sounds with jazz, pop, and her own self-described mission-oriented songwriting.',
+            'Afropop\'s coverage of her album Fenfo framed her as an artist finding sweetness in hardship, channeling personal and political experience into sound.',
+            'Her high-profile collaborations span the jazz and pop worlds, extending Malian music\'s reach to new global audiences.'
+          ],
+          links: [
+            { label: 'Fatoumata Diawara on Finding Sweetness — Afropop', url: 'https://afropop.org/articles/fatoumata-diawara-on-finding-sweetness-in-a-hard-life' }
+          ]
+        },
+        miriam_makeba: {
+          name: 'MIRIAM MAKEBA',
+          subtitle: 'MAMA AFRICA',
+          wiki: 'Miriam Makeba',
+          paragraphs: [
+            'Miriam Makeba was a foundational political and musical figure whose life shaped global perceptions of African music and resistance.',
+            'After speaking against apartheid at the United Nations, she lived in exile for decades while her voice continued to reach audiences worldwide.',
+            'Afropop\'s memorial coverage treats her as essential to the story of modern African music, marking her lasting cultural influence.'
+          ],
+          links: [
+            { label: 'Remembering Mama Africa — Afropop', url: 'https://afropop.org/articles/miriam-makeba-remembering-mama-africa' }
+          ]
+        },
+        nneka: {
+          name: 'NNEKA',
+          subtitle: 'NIGERIA\'S SOUL REBEL',
+          wiki: 'Nneka',
+          paragraphs: [
+            'Nneka is a Nigerian singer-songwriter whose work sits at the crossroads of reggae, hip-hop, and soul.',
+            'Afropop\'s concert review of her Mercury Lounge performance spotlighted her as an influential voice in the global circuit of African music.',
+            'Her music carries a political and spiritual intensity that connects Nigerian traditions with diaspora sounds.'
+          ],
+          links: [
+            { label: 'Nneka Live at Mercury Lounge — Afropop', url: 'https://www.afropop.org/articles/nneka-live-at-mercury-lounge' }
+          ]
+        },
+        oumou_sangar: {
+          name: 'OUMOU SANGARÉ',
+          subtitle: 'QUEEN OF WASSOULOU',
+          wiki: 'Oumou Sangaré',
+          paragraphs: [
+            'Oumou Sangaré is known as the queen of Wassoulou music, a tradition rooted in southern Mali and carried by women\'s voices.',
+            'Afropop\'s review of her 2022 return to American stages highlighted her as a continuing, commanding live force.',
+            'Her artistry connects deep Malian tradition with contemporary production, sustaining cultural influence across decades.'
+          ],
+          links: [
+            { label: 'Oumou Sangaré\'s Triumphant U.S. Return — Afropop', url: 'https://www.afropop.org/articles/oumou-sangare' }
+          ]
+        },
+        rokia_kon: {
+          name: 'ROKIA KONÉ',
+          subtitle: 'NEW MOVES IN MALIAN POP',
+          wiki: 'Rokia Koné',
+          paragraphs: [
+            'Rokia Koné is a Malian singer whose album Bamanan, produced with Jacknife Lee, marked a bold leap in production and international visibility.',
+            'Her work with Les Amazones d\'Afrique connected her to a collective of women artists reshaping the sound of West African pop.',
+            'Afropop frames her as a leading innovator, rooted in Bambara and Mande traditions but reaching toward new sonic territory.'
+          ],
+          links: [
+            { label: 'Rokia Koné Leads New Moves in Malian Pop — Afropop', url: 'https://afropop.org/articles/rokia-kon%C3%A9-leads-new-moves-in-malian-pop' }
+          ]
+        },
+        rokia_traor: {
+          name: 'ROKIA TRAORÉ',
+          subtitle: 'MALIAN ARTIST, GLOBAL REACH',
+          wiki: 'Rokia Traoré',
+          paragraphs: [
+            'Rokia Traoré is a Malian singer, songwriter, and guitarist whose artistry has earned her an international concert and recording career.',
+            'Afropop\'s coverage of her live performance at the Highline Ballroom framed her as a headlining act with broad cultural and political resonance.',
+            'Her music weaves together Malian griot traditions, contemporary guitar work, and reflections on displacement and belonging.'
+          ],
+          links: [
+            { label: 'Rokia Traoré Live at the Highline Ballroom — Afropop', url: 'https://afropop.org/articles/rokia-traore-live-at-the-highline-ballroom' }
+          ]
+        },
+        sabah: {
+          name: 'SABAH',
+          subtitle: 'LEGEND OF LEBANESE SONG',
+          wiki: 'Sabah (singer)',
+          paragraphs: [
+            'Sabah was a legendary Lebanese singer and actor whose career spanned the mid-20th century golden age of Arabic music.',
+            'Afropop\'s Hip Deep Lebanon coverage positions her as a key contemporary of Fairuz and the Rahbani circle.',
+            'Her voice and screen presence helped define the sound and style of a generation of Arabic popular culture.'
+          ],
+          links: [
+            { label: 'Hip Deep Lebanon: Zaki Nassif and Sabah — Afropop', url: 'https://www.afropop.org/articles/hip-deep-lebanon-1-special-feature-zaki-nassif-and-sabah' }
+          ]
+        },
+        sho_madjozi: {
+          name: 'SHO MADJOZI',
+          subtitle: 'XITSONGA RAP & GQOM',
+          wiki: 'Sho Madjozi',
+          paragraphs: [
+            'Sho Madjozi is a South African rapper and performer who raps in Xitsonga, projecting pride and defiance through language and style.',
+            'Afropop highlighted her in their Fresh Cuts series as a notable figure in the gqom scene, with her track Dumi Hi Phone singled out.',
+            'Her work represents a new generation of African artists centering indigenous languages in global pop contexts.'
+          ],
+          links: [
+            { label: 'Fresh Cuts, Vol. Nine — Afropop', url: 'https://www.afropop.org/articles/fresh-cuts-vol-nine' }
+          ]
+        },
+        shungudzo: {
+          name: 'SHUNGUDZO',
+          subtitle: 'HARARE TO LOS ANGELES',
+          wiki: 'Shungudzo',
+          paragraphs: [
+            'Shungudzo is a Zimbabwean-American singer-songwriter whose work merges pop craft with explicit social and political engagement.',
+            'Afropop\'s interview traced her path from Harare to Los Angeles, exploring how movement shaped her artistic and political identity.',
+            'She is featured in Afropop\'s Women Warriors program alongside other artists using music as a vehicle for change.'
+          ],
+          links: [
+            { label: 'Shungudzo: From Harare to LA — Afropop', url: 'https://afropop.org/articles/shungudzo-from-harare-to-la' },
+            { label: 'Afropop\'s Women Warriors — Afropop', url: 'https://www.afropop.org/audio-programs/afropops-women-warriors' }
+          ]
+        },
+        tems: {
+          name: 'TEMS',
+          subtitle: 'AFROBEATS GRAMMY WINNER',
+          wiki: 'Tems',
+          paragraphs: [
+            'Tems is a Nigerian singer-songwriter whose Grammy win for Best African Musical Performance marked a significant moment for Afrobeats-era visibility.',
+            'Afropop\'s coverage framed her as a breakout global figure, while also reflecting on how genre categories shape markets and attention.',
+            'Her voice and production style have helped define the sound of contemporary Nigerian pop on the world stage.'
+          ],
+          links: [
+            { label: 'Tems Wins Best African Musical Performance Grammy — Afropop', url: 'https://www.afropop.org/articles/tems-wins-best-african-musical-perrormance-grammy' }
+          ]
+        },
+        tiwa_savage: {
+          name: 'TIWA SAVAGE',
+          subtitle: 'NIGERIA\'S TRIPLE THREAT',
+          wiki: 'Tiwa Savage',
+          paragraphs: [
+            'Tiwa Savage is a Nigerian singer, songwriter, and actor who has topped charts and built one of the most visible careers in contemporary Afrobeats.',
+            'Afropop\'s profile of Nigerian women in music described her as a triple threat whose collaborations and visibility position her as a central figure.',
+            'She has spoken openly about the expectation to work harder than male counterparts in an industry still shaped by gendered dynamics.'
+          ],
+          links: [
+            { label: 'Nigeria\'s Women Take Center Stage — Afropop', url: 'https://afropop.org/articles/nigerias-women-take-center-stage' }
+          ]
+        },
+        toshi_reagon: {
+          name: 'TOSHI REAGON',
+          subtitle: 'COMPOSER & CULTURAL INHERITOR',
+          wiki: 'Toshi Reagon',
+          paragraphs: [
+            'Toshi Reagon is an American composer, producer, and singer with deep roots in Black musical lineages, including the legacy of Sweet Honey in the Rock.',
+            'Afropop\'s coverage of her 2021 Herb Alpert Arts Award highlighted her as a risk-taking artist whose work spans blues, gospel, Americana, and rock.',
+            'She is featured in Afropop\'s Women Warriors program as a voice carrying forward traditions of music and social movement.'
+          ],
+          links: [
+            { label: 'Toshi Reagon on Winning 2021 Herb Alpert Arts Award — Afropop', url: 'https://www.afropop.org/articles/toshi-reagon-on-winning-2021-herb-alpert-arts-award' },
+            { label: 'Afropop\'s Women Warriors — Afropop', url: 'https://www.afropop.org/audio-programs/afropops-women-warriors' }
+          ]
+        },
+        umm_kulthum: {
+          name: 'UMM KULTHUM',
+          subtitle: 'THE VOICE OF EGYPT',
+          wiki: 'Umm Kulthum',
+          paragraphs: [
+            'Umm Kulthum was the leading singer in the Arabic-speaking world through much of the 20th century, whose monthly radio broadcasts commanded millions of listeners.',
+            'Afropop dedicated a Women\'s History Month program to her legacy, exploring her cultural impact with the scholarship of biographer Virginia Danielson.',
+            'The scale of public mourning at her 1975 funeral reflected the depth of her influence on Egyptian and Arabic cultural life.'
+          ],
+          links: [
+            { label: 'Umm Kulthum: The Voice of Egypt — Afropop', url: 'https://afropop.org/audio-programs/umm-kulthum-the-voice-of-egypt' },
+            { label: 'Virginia Danielson on Umm Kulthum — Afropop', url: 'https://www.afropop.org/articles/7799' }
+          ]
+        },
+        yemi_alade: {
+          name: 'YEMI ALADE',
+          subtitle: 'AFROBEATS PAN-AFRICAN STAR',
+          wiki: 'Yemi Alade',
+          paragraphs: [
+            'Yemi Alade is a Nigerian singer-songwriter and performer with Yoruba and Igbo roots whose 2013 breakout hit Johnny launched a pan-African career.',
+            'Afropop\'s profile-review framed her as a major Afrobeats-era star with reach across the continent and beyond.',
+            'Her sustained touring visibility and recording output have made her one of the defining voices of contemporary African popular music.'
+          ],
+          links: [
+            { label: 'Yemi Alade: From Montreal with Love — Afropop', url: 'https://www.afropop.org/articles/yemi-alade-from-montreal-with-love' }
+          ]
+        }
+      };
+
+      const bioLinks = document.getElementById('bioLinks');
+
+      function getFallbackArtistImage(profile) {
+        const query = encodeURIComponent(`${profile.name} portrait singer black and white`);
+        return `https://source.unsplash.com/1600x2200/?${query}`;
+      }
+
+      async function resolveArtistImage(artistKey, profile) {
+        if (profile.image) {
+          if (!profile.image.endsWith('.webp')) return profile.image;
+
+          const pngFallback = profile.image.replace(/\.webp$/i, '.png');
+          const jpgFallback = profile.image.replace(/\.webp$/i, '.jpg');
+
+          const tryUrl = (url) => new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(url);
+            img.onerror = () => resolve(null);
+            img.src = url;
+          });
+
+          const primary = await tryUrl(profile.image);
+          if (primary) return primary;
+
+          const png = await tryUrl(pngFallback);
+          if (png) return png;
+
+          const jpg = await tryUrl(jpgFallback);
+          if (jpg) return jpg;
+        }
+
+        if (imageCache[artistKey]) return imageCache[artistKey];
+
+        if (profile.wiki) {
+          try {
+            const endpoint = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(profile.wiki)}`;
+            const response = await fetch(endpoint);
+            if (response.ok) {
+              const data = await response.json();
+              const wikiImage = (data.originalimage && data.originalimage.source) || (data.thumbnail && data.thumbnail.source);
+              if (wikiImage) {
+                imageCache[artistKey] = wikiImage;
+                return wikiImage;
+              }
+            }
+          } catch (error) {
+            // Silently fallback to generated portrait query image.
+          }
+        }
+
+        const fallback = getFallbackArtistImage(profile);
+        imageCache[artistKey] = fallback;
+        return fallback;
+      }
+
+      async function renderBio(artistKey) {
+        const profile = ARTIST_BIOS[artistKey] || ARTIST_BIOS.fela;
+        const token = ++bioRenderToken;
+        const immediateImage = profile.image || getFallbackArtistImage(profile);
+        bioModalBg.style.backgroundImage = immediateImage ? `url('${immediateImage}')` : 'none';
+        bioTitle.textContent = profile.name;
+        bioSubtitle.textContent = profile.subtitle;
+        bioText.innerHTML = '';
+        profile.paragraphs.forEach((paragraph) => {
+          const p = document.createElement('p');
+          p.textContent = paragraph;
+          bioText.appendChild(p);
+        });
+
+        // Render source links
+        bioLinks.innerHTML = '';
+        if (profile.links && profile.links.length) {
+          bioLinksTitle.hidden = false;
+          profile.links.forEach((link) => {
+            if (!link || !link.url || !link.label) return;
+            const a = document.createElement('a');
+            a.className = 'bio-source';
+            a.href = link.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.textContent = link.label;
+            bioLinks.appendChild(a);
+          });
+        } else {
+          bioLinksTitle.hidden = true;
+        }
+
+        const resolvedImage = await resolveArtistImage(artistKey, profile);
+        if (token !== bioRenderToken) return;
+        if (resolvedImage) {
+          bioModalBg.style.backgroundImage = `url('${resolvedImage}')`;
+        }
+      }
+
+      let dissolveSource = null;
+      let currentBioArtist = null;
+      let bioOpenCount = 0;
+
+      function openBio(artistKey, sourceCard) {
+        currentBioArtist = artistKey;
+        bioOpenCount++;
+        trackEvent('artist_open', { artist_id: artistKey });
+        renderBio(artistKey);
+
+        // After 2+ bio opens, show poll CTA (if not already voted/dismissed)
+        if (bioOpenCount >= 2 && !sessionStorage.getItem('apww_poll_done')) {
+          setTimeout(() => {
+            document.getElementById('pollCta').classList.add('is-visible');
+          }, 1200);
+        }
+
+        // Dissolve: fade out surrounding text, then reveal modal
+        if (sourceCard) {
+          dissolveSource = sourceCard;
+          sourceCard.classList.add('is-dissolving');
+        }
+
+        // After text dissolves, bring in the modal
+        setTimeout(() => {
+          bioModal.classList.add('is-open');
+          bioModal.setAttribute('aria-hidden', 'false');
+          scrollContainer.classList.add('is-locked');
+          document.body.classList.add('bio-open');
+        }, sourceCard ? 300 : 0);
+      }
+
+      function closeBio() {
+        // Fade the modal out
+        bioModal.classList.remove('is-open');
+        bioModal.setAttribute('aria-hidden', 'true');
+
+        // After modal fades, unlock scroll and restore dissolved card
+        setTimeout(() => {
+          scrollContainer.classList.remove('is-locked');
+          document.body.classList.remove('bio-open');
+          if (dissolveSource) {
+            dissolveSource.classList.remove('is-dissolving');
+            dissolveSource = null;
+          }
+        }, 400);
+      }
+
+      /* ─── SHARE BUTTONS: inject into artist cards ─── */
+      const shareSvg = '<svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+
+      document.querySelectorAll('.artist-card').forEach(card => {
+        const key = card.dataset.artist;
+        if (!key) return;
+        const btn = document.createElement('button');
+        btn.className = 'share-btn';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Share this artist');
+        btn.innerHTML = shareSvg;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const name = ARTIST_BIOS[key] ? ARTIST_BIOS[key].name : key;
+          shareArtist(key, name);
+        });
+        card.appendChild(btn);
+      });
+
+      /* ─── BIO MODAL SHARE BUTTON ─── */
+      document.getElementById('bioShareBtn').addEventListener('click', () => {
+        if (currentBioArtist && ARTIST_BIOS[currentBioArtist]) {
+          shareArtist(currentBioArtist, ARTIST_BIOS[currentBioArtist].name);
+        }
+      });
+
+      /* ─── SCROLL DEPTH TRACKING ─── */
+      const depthMilestones = { 25: false, 50: false, 75: false, 100: false };
+      let optinCtaShown = false;
+
+      scrollContainer.addEventListener('scroll', () => {
+        const scrollTop = scrollContainer.scrollTop;
+        const scrollMax = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        if (scrollMax <= 0) return;
+        const pct = Math.round((scrollTop / scrollMax) * 100);
+
+        [25, 50, 75, 100].forEach(m => {
+          if (pct >= m && !depthMilestones[m]) {
+            depthMilestones[m] = true;
+            trackEvent('scroll_depth', { depth: m });
+          }
+        });
+
+        // Show opt-in CTA at 75% scroll if user hasn't voted or opted in
+        if (pct >= 75 && !optinCtaShown
+            && !sessionStorage.getItem('apww_poll_done')
+            && !localStorage.getItem('apww_opted_in')) {
+          optinCtaShown = true;
+          setTimeout(() => {
+            document.getElementById('pollCta').textContent = 'Stay connected with the music';
+            document.getElementById('pollCta').classList.add('is-visible');
+            document.getElementById('pollCta').dataset.action = 'optin';
+          }, 800);
+        }
+      }, { passive: true });
+
+      /* ─── POLL SYSTEM ─── */
+      const pollCta = document.getElementById('pollCta');
+      const pollModal = document.getElementById('pollModal');
+      const pollGrid = document.getElementById('pollGrid');
+      const pollVoteView = document.getElementById('pollVoteView');
+      const pollThanks = document.getElementById('pollThanks');
+
+      // Build poll options from the 6 featured artists
+      const featuredArtists = [
+        { key: 'fela', name: 'Fela Kuti', sub: 'Afrobeat Revolutionary' },
+        { key: 'kidjo', name: 'Angelique Kidjo', sub: 'Global Music Powerhouse' },
+        { key: 'makeba', name: 'Miriam Makeba', sub: 'Mama Africa' },
+        { key: 'ndour', name: "Youssou N'Dour", sub: 'Mbalax Icon' },
+        { key: 'sunnyade', name: 'King Sunny Ade', sub: 'King of Juju' },
+        { key: 'burna', name: 'Burna Boy', sub: 'Afro-Fusion Trailblazer' }
+      ];
+
+      featuredArtists.forEach(a => {
+        const opt = document.createElement('button');
+        opt.type = 'button';
+        opt.className = 'poll-option';
+        opt.dataset.artist = a.key;
+        opt.innerHTML = '<span class="poll-option-name">' + a.name + '</span><span class="poll-option-sub">' + a.sub + '</span>';
+        opt.addEventListener('click', () => handlePollVote(a.key));
+        pollGrid.appendChild(opt);
+      });
+
+      function handlePollVote(artistKey) {
+        trackEvent('poll_vote', { artist_id: artistKey });
+        sessionStorage.setItem('apww_poll_done', '1');
+
+        // Highlight selected
+        pollGrid.querySelectorAll('.poll-option').forEach(o => o.classList.remove('is-selected'));
+        pollGrid.querySelector('[data-artist="' + artistKey + '"]').classList.add('is-selected');
+
+        // Show thank-you, then transition to opt-in
+        setTimeout(() => {
+          pollVoteView.style.display = 'none';
+          pollThanks.classList.add('is-active');
+
+          // After a beat, close poll and open opt-in (if not already opted in)
+          if (!localStorage.getItem('apww_opted_in')) {
+            setTimeout(() => {
+              closePoll();
+              openOptin();
+            }, 1800);
+          } else {
+            setTimeout(closePoll, 2000);
+          }
+        }, 600);
+      }
+
+      function openPoll() {
+        pollModal.classList.add('is-open');
+        pollCta.classList.remove('is-visible');
+      }
+
+      function closePoll() {
+        pollModal.classList.remove('is-open');
+        sessionStorage.setItem('apww_poll_done', '1');
+        // Reset view for next session
+        pollVoteView.style.display = '';
+        pollThanks.classList.remove('is-active');
+        pollGrid.querySelectorAll('.poll-option').forEach(o => o.classList.remove('is-selected'));
+      }
+
+      pollCta.addEventListener('click', () => {
+        if (pollCta.dataset.action === 'optin') {
+          pollCta.classList.remove('is-visible');
+          openOptin();
+        } else {
+          openPoll();
+        }
+      });
+
+      document.getElementById('pollClose').addEventListener('click', closePoll);
+      pollModal.addEventListener('click', (e) => {
+        if (e.target === pollModal) closePoll();
+      });
+
+      /* ─── OPT-IN SYSTEM ─── */
+      const optinModal = document.getElementById('optinModal');
+      const optinForm = document.getElementById('optinForm');
+      const optinEmail = document.getElementById('optinEmail');
+      const optinError = document.getElementById('optinError');
+      const optinFormView = document.getElementById('optinFormView');
+      const optinConfirmed = document.getElementById('optinConfirmed');
+
+      function openOptin() {
+        if (localStorage.getItem('apww_opted_in')) return;
+        optinModal.classList.add('is-open');
+      }
+
+      function closeOptin() {
+        optinModal.classList.remove('is-open');
+      }
+
+      optinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = optinEmail.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          optinError.classList.add('is-visible');
+          return;
+        }
+        optinError.classList.remove('is-visible');
+
+        trackEvent('opt_in_submit', { email });
+        localStorage.setItem('apww_opted_in', email);
+
+        // Show confirmation
+        optinFormView.style.display = 'none';
+        optinConfirmed.classList.add('is-active');
+
+        setTimeout(closeOptin, 2200);
+      });
+
+      document.getElementById('optinClose').addEventListener('click', closeOptin);
+      optinModal.addEventListener('click', (e) => {
+        if (e.target === optinModal) closeOptin();
+      });
+
+      // ── Observe intro, names showcase, and directory cards for fade-in ──
+      document.querySelectorAll('.intro-card, .names-card, .directory-card').forEach(card => {
+        observer.observe(card);
+      });
+
+      // Attach the observer and bio open behavior to every artist card
+      document.querySelectorAll('.artist-card').forEach(card => {
+        observer.observe(card);
+        const artistKey = card.dataset.artist;
+        if (artistKey) {
+          card.addEventListener('click', () => {
+            openBio(artistKey, card);
+          });
+        }
+      });
+
+      // Directory links open bios
+      document.querySelectorAll('.directory-link').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const artistKey = btn.dataset.artist;
+          if (artistKey && ARTIST_BIOS[artistKey]) {
+            const dirCard = btn.closest('.directory-card');
+            openBio(artistKey, dirCard);
+          }
+        });
+      });
+
+      closeBioBtn.addEventListener('click', closeBio);
+      bioBackdrop.addEventListener('click', closeBio);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          if (pollModal.classList.contains('is-open')) { closePoll(); return; }
+          if (optinModal.classList.contains('is-open')) { closeOptin(); return; }
+          if (bioModal.classList.contains('is-open')) { closeBio(); }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
