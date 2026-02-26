@@ -30,8 +30,10 @@
 
 - [x] Add root `index.html` so hosting `/` does not return `404`.
 - [x] Preserve query/hash on redirect to `artist_profiles.html`.
-- [ ] Commit and push fix to `main`.
-- [ ] Verify branch is clean and remote is up to date.
+- [x] Commit and push fix to `main`.
+- [x] Verify branch is clean and remote is up to date.
 
 ## Review
-- Pending.
+- Completed on February 26, 2026.
+- Added root `index.html` redirect entrypoint for static hosts.
+- Pushed commit `3852864` to `origin/main`.
