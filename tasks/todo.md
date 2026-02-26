@@ -23,3 +23,15 @@
 ## Review
 - Completed on February 26, 2026.
 - Verified `main` is tracking `origin/main` and push succeeded.
+
+---
+
+# 404 Fix Plan
+
+- [x] Add root `index.html` so hosting `/` does not return `404`.
+- [x] Preserve query/hash on redirect to `artist_profiles.html`.
+- [ ] Commit and push fix to `main`.
+- [ ] Verify branch is clean and remote is up to date.
+
+## Review
+- Pending.
