@@ -3,7 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afropop Worldwide — Women's History Month</title>
+  <title>Women's History Month 2026 — Afropop Worldwide</title>
+  <meta name="description" content="Celebrating the women whose voices shaped African and diasporic music. Explore 20 artist profiles, March episodes, and more.">
+
+  <!-- Open Graph (Facebook / Instagram) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Women's History Month 2026 — Afropop Worldwide">
+  <meta property="og:description" content="Celebrating the women whose voices shaped African and diasporic music. Explore 20 artist profiles, March episodes, and more.">
+  <meta property="og:url" content="https://ceyvion.github.io/apww_womens_history_month/artist_profiles.html">
+  <meta property="og:image" content="https://ceyvion.github.io/apww_womens_history_month/Gemini_Generated_Image_quarm3quarm3quar.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Afropop Worldwide">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Women's History Month 2026 — Afropop Worldwide">
+  <meta name="twitter:description" content="Celebrating the women whose voices shaped African and diasporic music.">
+  <meta name="twitter:image" content="https://ceyvion.github.io/apww_womens_history_month/Gemini_Generated_Image_quarm3quarm3quar.webp">
+
   <!-- Preload the hero image so the first screen appears instantly -->
   <link rel="preload" as="image" type="image/webp" href="./Gemini_Generated_Image_quarm3quarm3quar.webp">
   <style>
@@ -609,30 +627,33 @@
 
     .bio-links-title {
       margin: 0;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .bio-source {
       display: inline-block;
       margin: 0;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 400;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.5);
       text-decoration: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      padding-bottom: 1px;
-      transition: color 0.25s ease, border-color 0.25s ease;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      padding: 6px 10px;
+      transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     }
 
     .bio-source:hover {
-      color: rgba(255, 255, 255, 0.7);
-      border-color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .nav-link {
@@ -866,6 +887,12 @@
       margin-bottom: 8px;
     }
 
+    .poll-option:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 50%;
+      justify-self: center;
+    }
+
     .poll-option {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1086,6 +1113,270 @@
       margin: 0;
     }
 
+    /* ─── EPISODE HUB ─── */
+    .episode-hub {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: #080808;
+      contain: layout style paint;
+    }
+
+    .episode-hub-inner {
+      position: relative;
+      z-index: 10;
+      width: 340px;
+      max-width: 88vw;
+    }
+
+    .episode-hub-eyebrow {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 16px;
+    }
+
+    .episode-hub-title {
+      margin: 0 0 28px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .episode-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .episode-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .episode-item:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .episode-item:active {
+      transform: scale(0.98);
+    }
+
+    .episode-item-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .episode-item-number {
+      display: block;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+      margin-bottom: 3px;
+    }
+
+    .episode-item-title {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .episode-item-date {
+      display: block;
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 4px;
+    }
+
+    .episode-item.is-locked {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .episode-item.is-locked:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.06);
+      transform: none;
+    }
+
+    .episode-lock-icon,
+    .episode-play-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .episode-lock-icon {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .episode-play-icon {
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.25s ease;
+    }
+
+    .episode-item:hover .episode-play-icon {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Episode hub stagger reveal */
+    .episode-hub-inner > * {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .episode-hub.is-visible .episode-hub-inner > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .episode-hub.is-visible .episode-hub-eyebrow { transition-delay: 0.1s; }
+    .episode-hub.is-visible .episode-hub-title   { transition-delay: 0.2s; }
+    .episode-hub.is-visible .episode-list        { transition-delay: 0.35s; }
+
+    /* ─── ARTICLE CTA ON CARDS ─── */
+    .article-cta {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 2px;
+      transition: color 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .article-cta:hover {
+      color: rgba(255, 255, 255, 0.85);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .artist-card.is-visible .article-cta {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.25s ease, border-color 0.25s ease;
+      transition-delay: 0.62s;
+    }
+
+    /* ─── NAV DOTS ─── */
+    .nav-dots {
+      position: fixed;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: auto;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-dot:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-dot.is-active {
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(1.4);
+    }
+
+    /* ─── FIXED BRAND LINK ─── */
+    .apww-brand {
+      position: fixed;
+      bottom: 12px;
+      left: 16px;
+      z-index: 50;
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      transition: color 0.25s ease;
+      pointer-events: auto;
+    }
+
+    .apww-brand:hover {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ─── SCROLL HINT ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      color: rgba(255, 255, 255, 0.2);
+      animation: scrollHintBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollHintBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.2; }
+      50% { transform: translateX(-50%) translateY(6px); opacity: 0.4; }
+    }
+
+    .scroll-hint svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+    }
+
     /* ─── MOBILE READABILITY ─── */
     @media (max-width: 768px) {
 
@@ -1268,6 +1559,52 @@
         font-size: 22px;
         padding: 10px;
       }
+
+      /* Episode hub mobile */
+      .episode-hub-inner {
+        width: 90vw;
+      }
+
+      .episode-hub-eyebrow {
+        font-size: 11px;
+      }
+
+      .episode-hub-title {
+        font-size: 17px;
+      }
+
+      .episode-item {
+        padding: 16px 18px;
+      }
+
+      .episode-item-number {
+        font-size: 10px;
+      }
+
+      .episode-item-title {
+        font-size: 12px;
+      }
+
+      .episode-item-date {
+        font-size: 10px;
+      }
+
+      /* Article CTA mobile */
+      .article-cta {
+        font-size: 10px;
+        margin-top: 16px;
+      }
+
+      /* Nav dots mobile */
+      .nav-dots {
+        right: 10px;
+        gap: 6px;
+      }
+
+      .nav-dot {
+        width: 4px;
+        height: 4px;
+      }
     }
 
   </style>
@@ -1283,9 +1620,9 @@
       <div class="bg-image" data-bg="./Gemini_Generated_Image_quarm3quarm3quar.webp"></div>
 
       <div class="intro-info">
-        <span class="intro-eyebrow">Afropop Worldwide</span>
+        <span class="intro-eyebrow"><a href="https://afropop.org" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:1px;">Afropop Worldwide</a></span>
         <h1 class="intro-title">Women's History Month</h1>
-        <p class="intro-subtitle">Celebrating the Women of African Music</p>
+        <p class="intro-subtitle">Celebrating the Women of African Music — March 2026</p>
 
         <hr class="intro-rule">
 
@@ -1298,6 +1635,9 @@
           Scroll to explore artist profiles
         </div>
       </div>
+      <div class="scroll-hint">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
 
     <!-- NAMES SHOWCASE: Roll call -->
@@ -1305,10 +1645,10 @@
       <div class="names-cascade">
         <span>Aida Samb</span>
         <span class="feat">Angélique Kidjo</span>
-        <span>Cesária Évora</span>
+        <span class="feat">Cesária Évora</span>
         <span>Dobet Gnahoré</span>
         <span>Elida Almeida</span>
-        <span class="feat">Fatoumata Diawara</span>
+        <span>Fatoumata Diawara</span>
         <span>Fairuz</span>
         <span class="feat">Miriam Makeba</span>
         <span>Nneka</span>
@@ -1318,7 +1658,7 @@
         <span>Sabah</span>
         <span>Sho Madjozi</span>
         <span>Shungudzo</span>
-        <span class="feat">Tems</span>
+        <span>Tems</span>
         <span>Tiwa Savage</span>
         <span>Toshi Reagon</span>
         <span class="feat">Umm Kulthum</span>
@@ -1357,94 +1697,19 @@
       </div>
     </div>
 
-    <!-- ARTIST 1: FELA KUTI -->
-    <div class="artist-card" data-artist="fela">
-      <!-- YOUR REQUESTED IMAGE RETURNED HERE -->
-      <div class="bg-image" data-bg="./Gemini_Generated_Image_o4qq50o4qq50o4qq.webp"></div>
-      
-      <div class="artist-info">
-        <p class="artist-name">FELA KUTI</p>
-        <p class="artist-title">AFROBEAT REVOLUTIONARY</p>
-
-        <div class="info-block">
-          <div class="row">
-            <span class="label">BORN.</span>
-            <span class="value">15 OCT 1938</span>
-          </div>
-          <div class="row">
-            <span class="label">STYLE.</span>
-            <span class="value">AFROBEAT / JAZZ / FUNK</span>
-          </div>
-          <div class="row">
-            <span class="label">KNOWN.</span>
-            <span class="value">MUSICIAN & ACTIVIST</span>
-          </div>
-        </div>
-
-        <div class="info-block">
-          <div class="row justify-between">
-            <span>LEG</span>
-            <span>01</span>
-          </div>
-          <div class="row">
-            <span class="value">AFROBEAT PIONEER</span>
-          </div>
-          <div class="row">
-            <span class="value">USED MUSIC TO CHALLENGE</span>
-          </div>
-          <div class="row">
-            <span class="value">CORRUPTION & OPPRESSION.</span>
-          </div>
-        </div>
+    <!-- EPISODE HUB: March WHM Shows -->
+    <div class="episode-hub" id="episodeHub">
+      <div class="episode-hub-inner">
+        <span class="episode-hub-eyebrow">March 2026 Episodes</span>
+        <h2 class="episode-hub-title">This Month on Afropop</h2>
+        <div class="episode-list" id="episodeList"></div>
       </div>
     </div>
 
-    <!-- ARTIST 2: ANGELIQUE KIDJO -->
-    <div class="artist-card" data-artist="kidjo">
-      <!-- Local image from your folder -->
-      <div class="bg-image" data-bg="./kidjo.jpg"></div>
-      
-      <div class="artist-info">
-        <p class="artist-name">ANGELIQUE KIDJO</p>
-        <p class="artist-title">GLOBAL MUSIC POWERHOUSE</p>
-
-        <div class="info-block">
-          <div class="row">
-            <span class="label">BORN.</span>
-            <span class="value">14 JUL 1960</span>
-          </div>
-          <div class="row">
-            <span class="label">FROM.</span>
-            <span class="value">OUIDAH, BENIN</span>
-          </div>
-          <div class="row">
-            <span class="label">KNOWN.</span>
-            <span class="value">SINGER & ACTIVIST</span>
-          </div>
-        </div>
-
-        <div class="info-block">
-          <div class="row justify-between">
-            <span>LEG</span>
-            <span>02</span>
-          </div>
-          <div class="row">
-            <span class="value">MULTI-GRAMMY WINNER</span>
-          </div>
-          <div class="row">
-            <span class="value">UNICEF GOODWILL AMB.</span>
-          </div>
-          <div class="row">
-            <span class="value">SINCE 2002.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ARTIST 3: MIRIAM MAKEBA -->
-    <div class="artist-card" data-artist="makeba">
+    <!-- ARTIST 1: MIRIAM MAKEBA -->
+    <div class="artist-card" data-artist="miriam_makeba">
       <div class="bg-image" data-bg="./Gemini_Generated_Image_lpw3i5lpw3i5lpw3.webp"></div>
-      
+
       <div class="artist-info">
         <p class="artist-name">MIRIAM MAKEBA</p>
         <p class="artist-title">MAMA AFRICA</p>
@@ -1467,7 +1732,7 @@
         <div class="info-block">
           <div class="row justify-between">
             <span>LEG</span>
-            <span>03</span>
+            <span>01</span>
           </div>
           <div class="row">
             <span class="value">GRAMMY WIN WITH BELAFONTE</span>
@@ -1479,29 +1744,117 @@
             <span class="value">RETURNED TO SA IN 1990.</span>
           </div>
         </div>
+
+        <a class="article-cta" href="https://afropop.org/articles/miriam-makeba-remembering-mama-africa" target="_blank" rel="noopener noreferrer" data-article-id="makeba_mama_africa">Read on Afropop &rarr;</a>
       </div>
     </div>
 
-    <!-- ARTIST 4: DRAFT -->
-    <div class="artist-card" data-artist="ndour">
-      <div class="bg-image" data-bg="./Gemini_Generated_Image_60j3oa60j3oa60j3.webp"></div>
-      
+    <!-- ARTIST 2: UMM KULTHUM -->
+    <div class="artist-card" data-artist="umm_kulthum">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_o4qq50o4qq50o4qq.webp"></div>
+
       <div class="artist-info">
-        <p class="artist-name">YOUSSOU N'DOUR</p>
-        <p class="artist-title">SENEGAL'S MBALAX ICON</p>
+        <p class="artist-name">UMM KULTHUM</p>
+        <p class="artist-title">THE VOICE OF EGYPT</p>
 
         <div class="info-block">
           <div class="row">
             <span class="label">BORN.</span>
-            <span class="value">01 OCT 1959</span>
+            <span class="value">31 DEC 1898</span>
           </div>
           <div class="row">
             <span class="label">FROM.</span>
-            <span class="value">DAKAR, SENEGAL</span>
+            <span class="value">TAMAY-AZ-ZAHAYRA, EGYPT</span>
           </div>
           <div class="row">
             <span class="label">KNOWN.</span>
-            <span class="value">SINGER & COMPOSER</span>
+            <span class="value">SINGER & CULTURAL ICON</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>02</span>
+          </div>
+          <div class="row">
+            <span class="value">MOST LISTENED-TO SINGER</span>
+          </div>
+          <div class="row">
+            <span class="value">IN ARABIC HISTORY. MONTHLY</span>
+          </div>
+          <div class="row">
+            <span class="value">BROADCASTS TO MILLIONS.</span>
+          </div>
+        </div>
+
+        <a class="article-cta" href="https://afropop.org/audio-programs/umm-kulthum-the-voice-of-egypt" target="_blank" rel="noopener noreferrer" data-article-id="umm_kulthum_voice">Read on Afropop &rarr;</a>
+      </div>
+    </div>
+
+    <!-- ARTIST 3: ANGELIQUE KIDJO -->
+    <div class="artist-card" data-artist="ang_lique_kidjo">
+      <div class="bg-image" data-bg="./kidjo.jpg"></div>
+
+      <div class="artist-info">
+        <p class="artist-name">ANGELIQUE KIDJO</p>
+        <p class="artist-title">FIVE-TIME GRAMMY WINNER</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">14 JUL 1960</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">OUIDAH, BENIN</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & ACTIVIST</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="row justify-between">
+            <span>LEG</span>
+            <span>03</span>
+          </div>
+          <div class="row">
+            <span class="value">FIVE GRAMMY AWARDS</span>
+          </div>
+          <div class="row">
+            <span class="value">UNICEF GOODWILL AMB.</span>
+          </div>
+          <div class="row">
+            <span class="value">SINCE 2002.</span>
+          </div>
+        </div>
+
+        <a class="article-cta" href="https://www.afropop.org/articles/might-angelique-kidjo-be-the-righful-queen-of-afropop" target="_blank" rel="noopener noreferrer" data-article-id="kidjo_queen">Read on Afropop &rarr;</a>
+      </div>
+    </div>
+
+    <!-- ARTIST 4: OUMOU SANGARE -->
+    <div class="artist-card" data-artist="oumou_sangar">
+      <div class="bg-image" data-bg="./Gemini_Generated_Image_60j3oa60j3oa60j3.webp"></div>
+
+      <div class="artist-info">
+        <p class="artist-name">OUMOU SANGARE</p>
+        <p class="artist-title">QUEEN OF WASSOULOU</p>
+
+        <div class="info-block">
+          <div class="row">
+            <span class="label">BORN.</span>
+            <span class="value">25 FEB 1968</span>
+          </div>
+          <div class="row">
+            <span class="label">FROM.</span>
+            <span class="value">BAMAKO, MALI</span>
+          </div>
+          <div class="row">
+            <span class="label">KNOWN.</span>
+            <span class="value">SINGER & ADVOCATE</span>
           </div>
         </div>
 
@@ -1511,38 +1864,40 @@
             <span>04</span>
           </div>
           <div class="row">
-            <span class="value">TOOK MBALAX WORLDWIDE</span>
+            <span class="value">CHAMPION OF WOMEN'S RIGHTS</span>
           </div>
           <div class="row">
-            <span class="value">GRAMMY WIN: EGYPT (2005)</span>
+            <span class="value">THROUGH WASSOULOU MUSIC.</span>
           </div>
           <div class="row">
-            <span class="value">MINISTER 2012-2013.</span>
+            <span class="value">DECADES OF INFLUENCE.</span>
           </div>
         </div>
+
+        <a class="article-cta" href="https://www.afropop.org/articles/oumou-sangare" target="_blank" rel="noopener noreferrer" data-article-id="sangare_return">Read on Afropop &rarr;</a>
       </div>
     </div>
 
-    <!-- ARTIST 5: KING SUNNY ADE -->
-    <div class="artist-card" data-artist="sunnyade">
+    <!-- ARTIST 5: CESARIA EVORA -->
+    <div class="artist-card" data-artist="ces_ria_vora">
       <div class="bg-image" data-bg="./Gemini_Generated_Image_8we2pe8we2pe8we2.webp"></div>
-      
+
       <div class="artist-info">
-        <p class="artist-name">KING SUNNY ADE</p>
-        <p class="artist-title">KING OF JUJU</p>
+        <p class="artist-name">CESARIA EVORA</p>
+        <p class="artist-title">THE BAREFOOT DIVA</p>
 
         <div class="info-block">
           <div class="row">
             <span class="label">BORN.</span>
-            <span class="value">22 SEP 1946</span>
+            <span class="value">27 AUG 1941</span>
           </div>
           <div class="row">
             <span class="label">FROM.</span>
-            <span class="value">OSHOGBO, NIGERIA</span>
+            <span class="value">MINDELO, CAPE VERDE</span>
           </div>
           <div class="row">
             <span class="label">KNOWN.</span>
-            <span class="value">JUJU MUSIC PIONEER</span>
+            <span class="value">MORNA & COLADEIRA</span>
           </div>
         </div>
 
@@ -1552,56 +1907,17 @@
             <span>05</span>
           </div>
           <div class="row">
-            <span class="value">GLOBALIZED NIGERIAN JUJU</span>
+            <span class="value">GLOBAL FACE OF CAPE VERDE</span>
           </div>
           <div class="row">
-            <span class="value">ISLAND ERA: JUJU MUSIC</span>
+            <span class="value">GRAMMY-WINNING VOICE OF</span>
           </div>
           <div class="row">
-            <span class="value">2 GRAMMY NOMINATIONS.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ARTIST 6: BURNA BOY -->
-    <div class="artist-card" data-artist="burna">
-      <div class="bg-image" data-bg="./Gemini_Generated_Image_2fyp842fyp842fyp.webp"></div>
-      
-      <div class="artist-info">
-        <p class="artist-name">BURNA BOY</p>
-        <p class="artist-title">AFRO-FUSION TRAILBLAZER</p>
-
-        <div class="info-block">
-          <div class="row">
-            <span class="label">BORN.</span>
-            <span class="value">02 JUL 1991</span>
-          </div>
-          <div class="row">
-            <span class="label">FROM.</span>
-            <span class="value">PORT HARCOURT, NG</span>
-          </div>
-          <div class="row">
-            <span class="label">KNOWN.</span>
-            <span class="value">SINGER & SONGWRITER</span>
+            <span class="value">SAUDADE AND LONGING.</span>
           </div>
         </div>
 
-        <div class="info-block">
-          <div class="row justify-between">
-            <span>LEG</span>
-            <span>06</span>
-          </div>
-          <div class="row">
-            <span class="value">FIRST CAREER GRAMMY WIN</span>
-          </div>
-          <div class="row">
-            <span class="value">TWICE AS TALL (63RD)</span>
-          </div>
-          <div class="row">
-            <span class="value">BEST GLOBAL ALBUM 2021.</span>
-          </div>
-        </div>
+        <a class="article-cta" href="https://afropop.org/audio-programs/a-tribute-to-cesaria-evora" target="_blank" rel="noopener noreferrer" data-article-id="evora_tribute">Read on Afropop &rarr;</a>
       </div>
     </div>
 
@@ -1616,11 +1932,14 @@
         <p class="bio-subtitle" id="bioSubtitle">ARTIST BACKGROUND & CONTEXT</p>
       </div>
       <div class="bio-text" id="bioText"></div>
-      <p class="bio-links-title" id="bioLinksTitle" hidden>Relevant Articles</p>
+      <p class="bio-links-title" id="bioLinksTitle" hidden>Read More on Afropop</p>
       <div class="bio-links" id="bioLinks"></div>
       <div style="display:flex;align-items:center;gap:0;">
         <button class="nav-link" id="closeBioBtn" type="button">RETURN TO ARTISTS</button>
         <button class="bio-share-btn" id="bioShareBtn" type="button">Share</button>
+      </div>
+      <div style="margin-top:24px;font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.18);">
+        A project of <a href="https://afropop.org" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1);">Afropop Worldwide</a>
       </div>
     </div>
   </div>
@@ -1663,6 +1982,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Fixed branding -->
+  <a class="apww-brand" href="https://afropop.org" target="_blank" rel="noopener noreferrer">afropop.org</a>
+
+  <!-- Nav dots -->
+  <div class="nav-dots" id="navDots"></div>
 
   <!-- Toast notification -->
   <div class="toast" id="toast"></div>
@@ -1827,92 +2152,6 @@
       let bioRenderToken = 0;
 
       const ARTIST_BIOS = {
-        // ── Original artist profiles ──
-        fela: {
-          name: 'FELA KUTI',
-          subtitle: 'AFROBEAT REVOLUTIONARY',
-          image: './Gemini_Generated_Image_o4qq50o4qq50o4qq.webp',
-          paragraphs: [
-            'Born in Abeokuta, Nigeria, Fela studied music in London and combined highlife, jazz, Yoruba rhythms, and funk into a new sound later known as Afrobeat.',
-            'His songs were politically direct, attacking state violence and corruption while building Kalakuta Republic as a radical cultural space.',
-            'Despite repeated raids, arrests, and censorship, he remained one of Africa\'s most influential artists and a global symbol of musical resistance.'
-          ],
-          links: [
-            { label: 'Fela Kuti — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Fela-Kuti' }
-          ]
-        },
-        kidjo: {
-          name: 'ANGELIQUE KIDJO',
-          subtitle: 'GLOBAL MUSIC POWERHOUSE',
-          image: './kidjo.jpg',
-          paragraphs: [
-            'Born in Ouidah, Benin, Angelique Kidjo built an international career by blending West African traditions with jazz, funk, and pop.',
-            'Her voice and live performances helped expand African popular music across global stages and generations.',
-            'She is also known for humanitarian advocacy, including long service as a UNICEF Goodwill Ambassador.'
-          ],
-          links: [
-            { label: 'Angélique Kidjo — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Angelique-Kidjo' },
-            { label: 'Angélique Kidjo — Afropop Worldwide', url: 'https://www.afropop.org/articles/angelique-kidjo' }
-          ]
-        },
-        makeba: {
-          name: 'MIRIAM MAKEBA',
-          subtitle: 'MAMA AFRICA',
-          image: './Gemini_Generated_Image_lpw3i5lpw3i5lpw3.webp',
-          paragraphs: [
-            'Miriam Makeba was born in 1932 near Johannesburg and became one of the first African artists to gain major worldwide visibility.',
-            'After speaking against apartheid at the United Nations, she lived in exile while continuing her music and activism.',
-            'She won a Grammy with Harry Belafonte and later returned to South Africa in 1990 after years of political exile.'
-          ],
-          links: [
-            { label: 'Miriam Makeba — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Miriam-Makeba' },
-            { label: 'Miriam Makeba — South African History Online', url: 'https://www.sahistory.org.za/people/miriam-makeba' }
-          ]
-        },
-        ndour: {
-          name: 'YOUSSOU N\'DOUR',
-          subtitle: 'SENEGAL\'S MBALAX ICON',
-          image: './Gemini_Generated_Image_60j3oa60j3oa60j3.webp',
-          paragraphs: [
-            'Born in Dakar in 1959, Youssou N\'Dour became the leading global ambassador of mbalax, rooted in Senegalese sabar rhythms.',
-            'His collaborations connected West African music with international pop and world music audiences.',
-            'He won a Grammy for Egypt and served as Senegal\'s minister of culture and tourism from 2012 to 2013.'
-          ],
-          links: [
-            { label: 'Youssou N\'Dour — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Youssou-NDour' },
-            { label: 'GRAMMY: Youssou N\'Dour', url: 'https://www.grammy.com/artists/youssou-ndour/17140' }
-          ]
-        },
-        sunnyade: {
-          name: 'KING SUNNY ADE',
-          subtitle: 'KING OF JUJU',
-          image: './Gemini_Generated_Image_8we2pe8we2pe8we2.webp',
-          paragraphs: [
-            'King Sunny Ade helped modernize and internationalize Nigerian juju with layered guitars, talking drums, and Yoruba praise traditions.',
-            'His 1980s releases, including Juju Music and Synchro System, introduced many global listeners to contemporary Nigerian sound.',
-            'He became one of the first Nigerian stars with sustained international chart and touring visibility, earning Grammy nominations.'
-          ],
-          links: [
-            { label: 'King Sunny Adé — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/King-Sunny-Ade' },
-            { label: 'GRAMMY: King Sunny Adé', url: 'https://www.grammy.com/artists/king-sunny-ade/54' }
-          ]
-        },
-        burna: {
-          name: 'BURNA BOY',
-          subtitle: 'AFRO-FUSION TRAILBLAZER',
-          image: './Gemini_Generated_Image_2fyp842fyp842fyp.webp',
-          paragraphs: [
-            'Born in Port Harcourt in 1991, Burna Boy developed an Afro-fusion style that combines Afrobeats, dancehall, hip-hop, and reggae.',
-            'His global rise made him a defining voice of contemporary African popular music and a major arena performer.',
-            'He won his first Grammy in 2021 for Twice As Tall, in the Best Global Music Album category.'
-          ],
-          links: [
-            { label: 'Burna Boy — Encyclopaedia Britannica', url: 'https://www.britannica.com/biography/Burna-Boy' },
-            { label: 'GRAMMY: Burna Boy Wins (2021)', url: 'https://www.grammy.com/news/burna-boy-wins-best-global-music-album-twice-tall-2021-grammy-awards-show' }
-          ]
-        },
-
-        // ── Women's History Month: 20 Influential Women ──
         aida_samb: {
           name: 'AIDA SAMB',
           subtitle: 'SENEGALESE MBALAX RISING STAR',
@@ -2181,6 +2420,74 @@
         }
       };
 
+      /* ─── EPISODE HUB DATA & RENDERING (TIME-GATED) ─── */
+      const WHM_EPISODES = [
+        {
+          id: 'ep705', number: 705,
+          title: 'Africa in America: Ladies Edition',
+          airDate: '2026-03-05',
+          listenUrl: 'https://afropop.org/audio-programs/africa-in-america-ladies-edition'
+        },
+        {
+          id: 'ep870', number: 870,
+          title: 'Cheikha Rimitti: Rebel Queen of Algerian Music',
+          airDate: '2026-03-12',
+          listenUrl: 'https://afropop.org/audio-programs/cheikha-rimitti'
+        },
+        {
+          id: 'ep731', number: 731,
+          title: 'Hip Deep in Mali: Growing Into Music',
+          airDate: '2026-03-19',
+          listenUrl: 'https://afropop.org/audio-programs/hip-deep-mali-growing-into-music'
+        },
+        {
+          id: 'ep465', number: 465,
+          title: 'Umm Kulthum: The Voice of Egypt',
+          airDate: '2026-03-26',
+          listenUrl: 'https://afropop.org/audio-programs/umm-kulthum-the-voice-of-egypt'
+        }
+      ];
+
+      const episodeList = document.getElementById('episodeList');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const lockSvg = '<svg class="episode-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
+      const playSvg = '<svg class="episode-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+
+      WHM_EPISODES.forEach(ep => {
+        const airDate = new Date(ep.airDate + 'T00:00:00');
+        const isAired = today >= airDate;
+
+        const item = document.createElement('a');
+        item.className = 'episode-item' + (isAired ? '' : ' is-locked');
+
+        if (isAired) {
+          item.href = ep.listenUrl;
+          item.target = '_blank';
+          item.rel = 'noopener noreferrer';
+          item.addEventListener('click', () => {
+            trackEvent('episode_click', { episode_id: ep.id, episode_title: ep.title });
+          });
+        }
+
+        const airDateFormatted = airDate.toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric'
+        }).toUpperCase();
+
+        const dateLabel = isAired ? 'AIRED ' + airDateFormatted : 'AIRS ' + airDateFormatted;
+
+        item.innerHTML =
+          '<div class="episode-item-text">' +
+            '<span class="episode-item-number">EPISODE ' + ep.number + '</span>' +
+            '<span class="episode-item-title">' + ep.title + '</span>' +
+            '<span class="episode-item-date">' + dateLabel + '</span>' +
+          '</div>' +
+          (isAired ? playSvg : lockSvg);
+
+        episodeList.appendChild(item);
+      });
+
       const bioLinks = document.getElementById('bioLinks');
 
       function getFallbackArtistImage(profile) {
@@ -2237,7 +2544,7 @@
       }
 
       async function renderBio(artistKey) {
-        const profile = ARTIST_BIOS[artistKey] || ARTIST_BIOS.fela;
+        const profile = ARTIST_BIOS[artistKey] || ARTIST_BIOS.miriam_makeba;
         const token = ++bioRenderToken;
         const immediateImage = profile.image || getFallbackArtistImage(profile);
         bioModalBg.style.backgroundImage = immediateImage ? `url('${immediateImage}')` : 'none';
@@ -2262,6 +2569,10 @@
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
             a.textContent = link.label;
+            a.addEventListener('click', () => {
+              trackEvent('article_click', { artist_id: artistKey, article_url: link.url, source: 'bio_modal' });
+              recordInteraction();
+            });
             bioLinks.appendChild(a);
           });
         } else {
@@ -2283,6 +2594,7 @@
         currentBioArtist = artistKey;
         bioOpenCount++;
         trackEvent('artist_open', { artist_id: artistKey });
+        if (typeof recordInteraction === 'function') recordInteraction();
         renderBio(artistKey);
 
         // After 2+ bio opens, show poll CTA (if not already voted/dismissed)
@@ -2304,6 +2616,7 @@
           bioModal.setAttribute('aria-hidden', 'false');
           scrollContainer.classList.add('is-locked');
           document.body.classList.add('bio-open');
+          if (navDots) { navDots.style.opacity = '0'; navDots.style.pointerEvents = 'none'; }
         }, sourceCard ? 300 : 0);
       }
 
@@ -2316,6 +2629,7 @@
         setTimeout(() => {
           scrollContainer.classList.remove('is-locked');
           document.body.classList.remove('bio-open');
+          if (navDots) { navDots.style.opacity = '1'; navDots.style.pointerEvents = 'auto'; }
           if (dissolveSource) {
             dissolveSource.classList.remove('is-dissolving');
             dissolveSource = null;
@@ -2379,6 +2693,98 @@
         }
       }, { passive: true });
 
+      /* ─── ARTICLE CTA CLICK TRACKING ─── */
+      document.querySelectorAll('.article-cta').forEach(link => {
+        link.addEventListener('click', () => {
+          const card = link.closest('.artist-card');
+          const artistKey = card ? card.dataset.artist : 'unknown';
+          trackEvent('article_click', { artist_id: artistKey, article_url: link.href, source: 'card_cta' });
+          recordInteraction();
+        });
+      });
+
+      /* ─── INTERACTION DEPTH COUNTER ─── */
+      let interactionCount = 0;
+      const interactionMilestones = { 3: false, 5: false, 10: false };
+
+      function recordInteraction() {
+        interactionCount++;
+        [3, 5, 10].forEach(m => {
+          if (interactionCount >= m && !interactionMilestones[m]) {
+            interactionMilestones[m] = true;
+            trackEvent('interaction_depth', { interactions: m });
+          }
+        });
+      }
+
+      /* ─── ATTENTION / DWELL-TIME TRACKING ─── */
+      const sectionTimers = {};
+      const DWELL_THRESHOLD = 3000;
+
+      const dwellObserver = new IntersectionObserver((entries) => {
+        const now = Date.now();
+        entries.forEach(entry => {
+          const id = entry.target.dataset.artist ||
+                     entry.target.id ||
+                     entry.target.className.split(' ')[0];
+
+          if (entry.isIntersecting) {
+            sectionTimers[id] = { start: now, reported: false };
+          } else if (sectionTimers[id] && sectionTimers[id].start) {
+            const dwellMs = now - sectionTimers[id].start;
+            if (dwellMs >= DWELL_THRESHOLD && !sectionTimers[id].reported) {
+              trackEvent('section_dwell', { section_id: id, dwell_seconds: Math.round(dwellMs / 1000) });
+              sectionTimers[id].reported = true;
+            }
+            delete sectionTimers[id];
+          }
+        });
+      }, { root: scrollContainer, threshold: 0.5 });
+
+      document.querySelectorAll('.intro-card, .names-card, .directory-card, .episode-hub, .artist-card').forEach(s => {
+        dwellObserver.observe(s);
+      });
+
+      window.addEventListener('beforeunload', () => {
+        const now = Date.now();
+        Object.entries(sectionTimers).forEach(([id, timer]) => {
+          if (timer.start && !timer.reported) {
+            const dwellMs = now - timer.start;
+            if (dwellMs >= DWELL_THRESHOLD) {
+              trackEvent('section_dwell', { section_id: id, dwell_seconds: Math.round(dwellMs / 1000) });
+            }
+          }
+        });
+      });
+
+      /* ─── NAV DOTS ─── */
+      const navDots = document.getElementById('navDots');
+      const allSections = scrollContainer.querySelectorAll('.intro-card, .names-card, .directory-card, .episode-hub, .artist-card');
+
+      allSections.forEach((section, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'nav-dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Go to section ' + (i + 1));
+        dot.addEventListener('click', () => {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        navDots.appendChild(dot);
+      });
+
+      const dotObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = Array.from(allSections).indexOf(entry.target);
+            navDots.querySelectorAll('.nav-dot').forEach((d, i) => {
+              d.classList.toggle('is-active', i === index);
+            });
+          }
+        });
+      }, { root: scrollContainer, threshold: 0.5 });
+
+      allSections.forEach(section => dotObserver.observe(section));
+
       /* ─── POLL SYSTEM ─── */
       const pollCta = document.getElementById('pollCta');
       const pollModal = document.getElementById('pollModal');
@@ -2386,14 +2792,13 @@
       const pollVoteView = document.getElementById('pollVoteView');
       const pollThanks = document.getElementById('pollThanks');
 
-      // Build poll options from the 6 featured artists
+      // Build poll options from the 5 featured women
       const featuredArtists = [
-        { key: 'fela', name: 'Fela Kuti', sub: 'Afrobeat Revolutionary' },
-        { key: 'kidjo', name: 'Angelique Kidjo', sub: 'Global Music Powerhouse' },
-        { key: 'makeba', name: 'Miriam Makeba', sub: 'Mama Africa' },
-        { key: 'ndour', name: "Youssou N'Dour", sub: 'Mbalax Icon' },
-        { key: 'sunnyade', name: 'King Sunny Ade', sub: 'King of Juju' },
-        { key: 'burna', name: 'Burna Boy', sub: 'Afro-Fusion Trailblazer' }
+        { key: 'miriam_makeba', name: 'Miriam Makeba', sub: 'Mama Africa' },
+        { key: 'umm_kulthum', name: 'Umm Kulthum', sub: 'Voice of Egypt' },
+        { key: 'ang_lique_kidjo', name: 'Angélique Kidjo', sub: 'Five-Time Grammy Winner' },
+        { key: 'oumou_sangar', name: 'Oumou Sangaré', sub: 'Queen of Wassoulou' },
+        { key: 'ces_ria_vora', name: 'Cesária Évora', sub: 'The Barefoot Diva' }
       ];
 
       featuredArtists.forEach(a => {
@@ -2501,7 +2906,7 @@
       });
 
       // ── Observe intro, names showcase, and directory cards for fade-in ──
-      document.querySelectorAll('.intro-card, .names-card, .directory-card').forEach(card => {
+      document.querySelectorAll('.intro-card, .names-card, .directory-card, .episode-hub').forEach(card => {
         observer.observe(card);
       });
 

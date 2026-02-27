@@ -37,3 +37,21 @@
 - Completed on February 26, 2026.
 - Added root `index.html` redirect entrypoint for static hosts.
 - Pushed commit `3852864` to `origin/main`.
+
+---
+
+# Claude Verification Plan (2026-02-27)
+
+- [x] Verify claimed Phase 1 updates in `artist_profiles.html` (artists/cards/poll/highlights).
+- [x] Verify claimed Phase 2 episode hub UI + date gating behavior.
+- [x] Verify claimed Phase 3 branding/linking updates.
+- [x] Verify claimed Phase 4 social meta tags (Open Graph + Twitter).
+- [x] Verify claimed Phase 5 article CTAs and modal link styling/events.
+- [x] Verify claimed Phase 6 analytics updates in page + `apww_n8n_ingest_workflow.json`.
+- [x] Verify claimed Phase 7 UX polish (nav dots, modal interaction, responsive behavior).
+- [x] Document verification findings and discrepancies.
+
+## Review
+- Completed on February 27, 2026.
+- Runtime and code verification passed for all major claims (Phases 1-7), including event instrumentation and date gating.
+- One discrepancy: bio modal links are restyled and prominent, but not truly pill-shaped (`border-radius: 4px`), so that wording is overstated.
