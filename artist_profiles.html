@@ -2634,7 +2634,7 @@
       let nextCountdownEl = null;
 
       WHM_EPISODES.forEach(ep => {
-        const airDate = new Date(ep.airDate + 'T00:00:00');
+        const airDate = new Date(ep.airDate + 'T12:00:00-05:00');
         const isAired = today >= airDate;
         const isNext = !isAired && !nextEpisode;
         if (isNext) nextEpisode = ep;
@@ -2714,7 +2714,7 @@
 
       /* Live countdown ticker */
       if (nextCountdownEl) {
-        const airTarget = new Date(nextCountdownEl.dataset.air + 'T00:00:00').getTime();
+        const airTarget = new Date(nextCountdownEl.dataset.air + 'T12:00:00-05:00').getTime();
         const dEl = nextCountdownEl.querySelector('[data-d]');
         const hEl = nextCountdownEl.querySelector('[data-h]');
         const mEl = nextCountdownEl.querySelector('[data-m]');
