@@ -55,3 +55,20 @@
 - Completed on February 27, 2026.
 - Runtime and code verification passed for all major claims (Phases 1-7), including event instrumentation and date gating.
 - One discrepancy: bio modal links are restyled and prominent, but not truly pill-shaped (`border-radius: 4px`), so that wording is overstated.
+
+---
+
+# Mobile View + Navigation Fix Plan (2026-03-05)
+
+- [x] Reproduce the broken page opening behavior from the current entrypoint and identify the failing interaction.
+- [x] Reproduce the mobile layout issues in a phone-sized viewport and isolate the CSS/JS causes.
+- [x] Update `artist_profiles.html` and any entrypoint/linking code with the minimum changes needed to restore navigation and responsive layout.
+- [x] Re-test the entry flow and affected mobile interactions in Playwright.
+- [x] Document the result and any remaining risks in this review section.
+
+## Review
+- Completed on March 5, 2026.
+- Root entrypoint still correctly redirects `/` to `artist_profiles.html`; there is no second tracked HTML destination in the repo to relink.
+- Fixed the episode timing bug in `artist_profiles.html` so page initialization no longer crashes after the first March 5 episode air time, which restored the mobile intro reveal and bio-opening interactions.
+- Tightened mobile sizing for the intro, directory, artist cards, modals, poll, and opt-in form; on very short screens the intro section now grows taller than one viewport instead of clipping its copy.
+- Verified with Playwright (`npx -p playwright`) at `390x844` and `320x568`: root redirect landed on `/artist_profiles.html`, console errors were empty, and tapping a directory item opened the Miriam Makeba bio modal successfully.
