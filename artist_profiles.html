@@ -2106,7 +2106,65 @@
         left: 12px;
         bottom: 8px;
       }
+
+      .text-toggle {
+        left: 12px;
+        bottom: 24px;
+      }
     }
+
+    /* ─── TEXT SIZE TOGGLE ─── */
+    .text-toggle {
+      position: fixed;
+      bottom: 28px;
+      left: 16px;
+      z-index: 55;
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: rgba(255, 255, 255, 0.2);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 4px 7px;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease;
+      line-height: 1;
+    }
+
+    .text-toggle:hover {
+      color: rgba(255, 255, 255, 0.45);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    html.large-text .text-toggle {
+      color: rgba(255, 255, 255, 0.45);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── LARGE TEXT MODE ─── */
+    html.large-text .intro-eyebrow { font-size: 14px; }
+    html.large-text .intro-title { font-size: 32px; }
+    html.large-text .intro-subtitle { font-size: 16px; }
+    html.large-text .intro-body { font-size: 16px; }
+    html.large-text .intro-footer { font-size: 13px; }
+    html.large-text .names-cascade span { font-size: 15px; }
+    html.large-text .names-cascade .feat { font-size: 22px; }
+    html.large-text .directory-eyebrow { font-size: 14px; }
+    html.large-text .directory-link { font-size: 15px; }
+    html.large-text .directory-link-origin { font-size: 13px; }
+    html.large-text .artist-info { font-size: 15px; }
+    html.large-text .bio-content { font-size: 16px; }
+    html.large-text .bio-text p { font-size: 16px; }
+    html.large-text .episode-hub-title { font-size: 32px; }
+    html.large-text .episode-item-title,
+    html.large-text .episode-description { font-size: 15px; }
+    html.large-text .episode-item-date { font-size: 13px; }
+    html.large-text .poll-title { font-size: 17px; }
+    html.large-text .poll-option-name { font-size: 15px; }
+    html.large-text .optin-title { font-size: 17px; }
+    html.large-text .optin-subtitle { font-size: 15px; }
 
   </style>
 </head>
@@ -2486,6 +2544,9 @@
 
   <!-- Fixed branding -->
   <a class="apww-brand" href="https://afropop.org" target="_blank" rel="noopener noreferrer">afropop.org</a>
+
+  <!-- Text size toggle -->
+  <button class="text-toggle" id="textToggle" type="button" aria-label="Toggle larger text">Aa</button>
 
   <!-- Nav dots -->
   <div class="nav-dots" id="navDots"></div>
@@ -3634,6 +3695,16 @@
           if (optinModal.classList.contains('is-open')) { closeOptin(); return; }
           if (bioModal.classList.contains('is-open')) { closeBio(); }
         }
+      });
+
+      // ── Text size toggle ──
+      if (localStorage.getItem('apww_large_text') === '1') {
+        document.documentElement.classList.add('large-text');
+      }
+      document.getElementById('textToggle').addEventListener('click', () => {
+        document.documentElement.classList.toggle('large-text');
+        localStorage.setItem('apww_large_text',
+          document.documentElement.classList.contains('large-text') ? '1' : '0');
       });
     });
   </script>

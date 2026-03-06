@@ -89,3 +89,40 @@
 - Added `encrypted-media` to the SoundCloud iframe `allow` attribute and a title so the embed no longer throws console errors during browser verification.
 - Verified in a real Chromium session with frozen clocks at March 5 12:30 AM ET and March 12 12:30 AM ET/9:30 PM PT, plus mobile viewports `390x844` and `320x568`.
 - Verification results: root `/` still redirects to `/artist_profiles.html`; the March 5 episode is aired at the start of March 5; the March 12 episode is aired at the start of March 12 after DST begins; LA still shows `AIRED MAR 12`; the expanded card renders its description, SoundCloud player, and two listen cards; mobile overflow stays scrollable with no console/page errors.
+
+---
+
+# Claude Large Text Toggle Verification Plan (2026-03-06)
+
+- [x] Review the uncommitted `artist_profiles.html` diff for the large-text toggle implementation and check for obvious selector/layering issues.
+- [x] Verify in-browser on desktop that the toggle renders, toggles `html.large-text`, and persists through reload via `localStorage`.
+- [x] Verify in-browser on mobile that the toggle renders cleanly and does not conflict with the intro, names, directory, artist cards, or episode hub layouts.
+- [x] Verify the toggle sits below modal layers so bio/poll/opt-in dialogs naturally cover it when open.
+- [x] Record the final verification result and any remaining risks in this review section.
+
+## Review
+- Completed on March 6, 2026.
+- Reviewed the current `artist_profiles.html` diff: the feature is isolated to a fixed `#textToggle`, an `html.large-text` selector block, and a single persisted key `apww_large_text`; no code-level regression was found in the toggle logic.
+- Verified in headless Chromium on desktop (`1440x900`) that the toggle renders, flips `html.large-text`, increases the intro title from `28px` to `32px`, and persists through reload with `localStorage.apww_large_text === '1'`.
+- Verified in headless Chromium on mobile (`390x844` and `320x568`) that the toggle stays visible inside the viewport, large-text mode applies to intro/names/directory/artist-modal content, and captured screenshots of the intro, names, directory, artist card, and bio modal all remained visually clean without console or page errors.
+- Verified modal layering in-browser: with the bio modal open, `document.elementFromPoint()` over the toggle position resolves to the modal overlay/content rather than `#textToggle`, which matches the intended stacking (`z-index: 55` for the toggle vs. `80+` for modals).
+- Minor non-blocking follow-ups only: the toggle currently does not expose pressed state with `aria-pressed`, and it has no dedicated keyboard focus style.
+
+---
+
+# Claude Toggle Reposition Verification Plan (2026-03-06)
+
+- [x] Review the current `artist_profiles.html` diff for the bottom-left repositioning and responsive override values.
+- [x] Verify in-browser on desktop that the toggle sits above the brand link with a clear gap and does not overlap the share button or poll CTA.
+- [x] Verify in-browser on mobile that the toggle remains bottom-left, clear of other fixed controls, and visually clean.
+- [x] Re-verify toggle functionality, persistence, and runtime/network health after the placement change.
+- [x] Document the result and any residual risks in this review section.
+
+## Review
+- Completed on March 6, 2026.
+- Reviewed the current `artist_profiles.html` diff: the placement change is limited to the fixed `.text-toggle` coordinates plus a mobile override, with no change to the toggle behavior itself.
+- Verified toggle behavior in headless Chromium on desktop: initial state off, clicking `#textToggle` enables `html.large-text`, and a reload preserves `localStorage.apww_large_text === '1'`. No console or page errors were emitted during the persistence pass.
+- Verified desktop layout at `1440x900`: the toggle renders at `left 16-46 / bottom 851-872`, the brand link at `left 16-95 / bottom 876-888`, producing a `4px` vertical gap with no overlap; the forced-visible poll CTA sits at `left 590-850`, leaving `544px` of horizontal separation from the toggle; the bio modal share button sits at `left 714-757`, leaving `668px` of horizontal separation from the toggle.
+- Verified mobile layout at `390x844`: the toggle renders at `left 16-46 / bottom 795-816`, the brand link at `left 12-91 / bottom 824-836`, producing an `8px` vertical gap with no overlap; the forced-visible poll CTA sits at `left 98-293`, leaving `52px` of horizontal separation from the toggle; the bio modal share button sits at `left 175-218`, leaving `129px` of horizontal separation from the toggle.
+- Captured fresh desktop/mobile screenshots showing the bottom-left control layout and modal state in [artifacts/desktop-reposition-v2-clean-controls.png](/Users/macbookpro/Desktop/apww_glassmorphic_/artifacts/desktop-reposition-v2-clean-controls.png), [artifacts/mobile390-reposition-v2-clean-controls.png](/Users/macbookpro/Desktop/apww_glassmorphic_/artifacts/mobile390-reposition-v2-clean-controls.png), and [artifacts/mobile390-reposition-v2-clean-modal.png](/Users/macbookpro/Desktop/apww_glassmorphic_/artifacts/mobile390-reposition-v2-clean-modal.png).
+- One discrepancy remains in the stated verification summary: Chromium still reports a failed request to the existing Unsplash fallback image URL (`net::ERR_BLOCKED_BY_ORB`) when opening the Miriam Makeba bio, so I cannot confirm the blanket "no failed network requests beyond the pre-existing n8n webhook" claim as written.
