@@ -1145,14 +1145,33 @@
       align-items: center;
       overflow: hidden;
       background-color: #080808;
-      contain: layout style paint;
+      padding: 40px 0;
+      box-sizing: border-box;
     }
 
     .episode-hub-inner {
       position: relative;
       z-index: 10;
-      width: 400px;
+      width: 460px;
       max-width: 88vw;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.12) transparent;
+      padding-right: 4px;
+    }
+
+    .episode-hub-inner::-webkit-scrollbar {
+      width: 4px;
+    }
+    .episode-hub-inner::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .episode-hub-inner::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.12);
+      border-radius: 2px;
     }
 
     .episode-hub-eyebrow {
@@ -1192,7 +1211,7 @@
       align-items: center;
       gap: 12px;
       transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-      cursor: pointer;
+      cursor: default;
     }
 
     .episode-item:hover {
@@ -1358,6 +1377,132 @@
       color: rgba(255, 255, 255, 0.45);
       display: inline-block;
       margin-bottom: 2px;
+    }
+
+    /* ─── EXPANDED AIRED EPISODE ─── */
+    .episode-item.is-expanded {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 20px 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      cursor: default;
+    }
+
+    .episode-item.is-expanded .episode-play-icon {
+      display: none;
+    }
+
+    .episode-description {
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 12px 0 0;
+      letter-spacing: 0.01em;
+    }
+
+    .episode-embed-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .episode-embed-wrap iframe {
+      display: block;
+      border: none;
+    }
+
+    .episode-listen-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .episode-listen-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #fff;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .episode-listen-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .listen-card-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .listen-card-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .listen-card-sc .listen-card-icon {
+      background: rgba(255, 85, 0, 0.12);
+    }
+    .listen-card-sc .listen-card-icon svg {
+      color: #ff5500;
+    }
+
+    .listen-card-sp .listen-card-icon {
+      background: rgba(30, 215, 96, 0.12);
+    }
+    .listen-card-sp .listen-card-icon svg {
+      color: #1ed760;
+    }
+
+    .listen-card-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .listen-card-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .listen-card-platform {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 1px;
+    }
+
+    .listen-card-arrow {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.2);
+      transition: color 0.2s ease;
+    }
+
+    .episode-listen-card:hover .listen-card-arrow {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     /* ─── EPISODE LISTEN LINKS ─── */
@@ -1771,6 +1916,11 @@
         font-size: 12px;
       }
 
+      .episode-description {
+        font-size: 12.5px;
+        line-height: 1.6;
+      }
+
       /* Article CTA mobile */
       .article-cta {
         font-size: 12px;
@@ -1791,9 +1941,14 @@
 
     @media (max-width: 480px), (max-height: 700px) {
       .intro-card,
-      .directory-card,
-      .episode-hub {
+      .directory-card {
         align-items: flex-start;
+      }
+
+      .episode-hub {
+        align-items: center;
+        justify-content: flex-start;
+        padding: 32px 0;
       }
 
       .intro-card {
@@ -1866,11 +2021,15 @@
         line-height: 1.45;
       }
 
-      .directory-inner,
-      .episode-hub-inner {
+      .directory-inner {
         width: min(296px, calc(100vw - 32px));
         max-width: calc(100vw - 32px);
         max-height: calc(100svh - 136px);
+      }
+
+      .episode-hub-inner {
+        width: min(340px, calc(100vw - 32px));
+        max-width: calc(100vw - 32px);
       }
 
       .directory-link {
@@ -2784,7 +2943,11 @@
           id: 'ep705', number: 705,
           title: 'Africa in America: Ladies Edition',
           airDate: '2026-03-05',
-          listenUrl: 'https://afropop.org/audio-programs/africa-in-america-ladies-edition'
+          listenUrl: 'https://www.afropop.org/audio-programs/africa-in-america-ladies-edition',
+          description: 'Over the years, as barriers to international touring in the U.S. have risen, and more and more talented African and African diaspora artists have made their homes in American towns and cities, the sounds and voices of Africa have become more and more common on local scenes. In this edition of Afropop\u2019s \u201cAfrica in America\u201d series, we spotlight women, Marie Daulne (of Zap Mama) collaborating with NYC Afrobeat band Antibalas, Razia of Madagascar, and the incomparable Afro-jazz innovator Somi, also Sudanese-born Alsarah and Awa Sangho of Mali. Produced by Banning Eyre.',
+          soundcloudEmbed: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2272668410&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true',
+          soundcloudUrl: 'https://soundcloud.com/afropop-worldwide/womens-history-month-africa-in',
+          spotifyUrl: 'https://open.spotify.com/show/36pl0EKV0ayXaceB4IxYDk'
         },
         {
           id: 'ep870', number: 870,
@@ -2808,6 +2971,22 @@
 
       const episodeList = document.getElementById('episodeList');
       const nowMs = Date.now();
+      const EPISODE_TIME_ZONE = 'America/New_York';
+      const episodeZoneFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: EPISODE_TIME_ZONE,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+      });
+      const episodeLabelFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'UTC',
+        month: 'short',
+        day: 'numeric'
+      });
 
       const lockSvg = '<svg class="episode-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
       const playSvg = '<svg class="episode-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
@@ -2821,27 +3000,64 @@
       let nextEpisode = null;
       let nextCountdownEl = null;
 
+      function getEpisodeZoneParts(timestamp) {
+        const parts = {};
+        episodeZoneFormatter.formatToParts(new Date(timestamp)).forEach((part) => {
+          if (part.type !== 'literal') parts[part.type] = part.value;
+        });
+        return parts;
+      }
+
+      function getEpisodeDropTimestamp(dateStr) {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        let low = Date.UTC(year, month - 1, day) - (18 * 60 * 60 * 1000);
+        let high = Date.UTC(year, month - 1, day) + (18 * 60 * 60 * 1000);
+
+        while (low <= high) {
+          const mid = Math.floor(((low + high) / 2) / 1000) * 1000;
+          const parts = getEpisodeZoneParts(mid);
+          const zoneDate = `${parts.year}-${parts.month}-${parts.day}`;
+          const zoneTime = `${parts.hour}:${parts.minute}:${parts.second}`;
+
+          if (zoneDate < dateStr || (zoneDate === dateStr && zoneTime < '00:00:00')) {
+            low = mid + 1000;
+          } else {
+            high = mid - 1000;
+          }
+        }
+
+        return low;
+      }
+
+      function formatEpisodeAirDate(dateStr) {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return episodeLabelFormatter.format(new Date(Date.UTC(year, month - 1, day, 12))).toUpperCase();
+      }
+
+      function bindEpisodeLinkTracking(container, ep) {
+        container.querySelectorAll('[data-episode-platform]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            e.stopPropagation();
+            trackEvent('episode_click', {
+              episode_id: ep.id,
+              episode_title: ep.title,
+              platform: link.dataset.episodePlatform
+            });
+            recordInteraction();
+          });
+        });
+      }
+
       WHM_EPISODES.forEach(ep => {
-        const airDate = new Date(ep.airDate + 'T12:00:00-05:00');
-        const isAired = nowMs >= airDate.getTime();
+        const airTargetMs = getEpisodeDropTimestamp(ep.airDate);
+        const isAired = nowMs >= airTargetMs;
         const isNext = !isAired && !nextEpisode;
         if (isNext) nextEpisode = ep;
 
-        const item = document.createElement('a');
+        const item = document.createElement(isAired ? 'div' : 'a');
         item.className = 'episode-item' + (isAired ? '' : isNext ? ' is-next' : ' is-locked');
 
-        if (isAired) {
-          item.href = ep.listenUrl;
-          item.target = '_blank';
-          item.rel = 'noopener noreferrer';
-          item.addEventListener('click', () => {
-            trackEvent('episode_click', { episode_id: ep.id, episode_title: ep.title });
-          });
-        }
-
-        const airDateFormatted = airDate.toLocaleDateString('en-US', {
-          month: 'short', day: 'numeric'
-        }).toUpperCase();
+        const airDateFormatted = formatEpisodeAirDate(ep.airDate);
 
         if (isNext) {
           /* Countdown episode: show NEXT UP badge + live countdown */
@@ -2850,7 +3066,7 @@
               '<span class="episode-next-badge">NEXT UP</span>' +
               '<span class="episode-item-number">EPISODE ' + ep.number + '</span>' +
               '<span class="episode-item-title">' + ep.title + '</span>' +
-              '<div class="episode-countdown" data-air="' + ep.airDate + '">' +
+              '<div class="episode-countdown" data-air-target="' + airTargetMs + '">' +
                 '<div class="countdown-seg"><span class="countdown-val" data-d>--</span><span class="countdown-lbl">DAYS</span></div>' +
                 '<span class="countdown-sep">:</span>' +
                 '<div class="countdown-seg"><span class="countdown-val" data-h>--</span><span class="countdown-lbl">HRS</span></div>' +
@@ -2863,28 +3079,53 @@
             lockSvg;
           nextCountdownEl = item.querySelector('.episode-countdown');
         } else if (isAired) {
-          /* Aired episode: show listen platforms */
+          /* Aired episode: show listen platforms, description, and embeds */
+          const hasExpanded = ep.description || ep.soundcloudEmbed || ep.soundcloudUrl || ep.spotifyUrl;
+          if (hasExpanded) item.classList.add('is-expanded');
+
+          let expandedHtml = '';
+          if (ep.description) {
+            expandedHtml += '<p class="episode-description">' + ep.description + '</p>';
+          }
+          /* Embeds (SoundCloud iframe, Spotify link card) + Afropop link */
+          if (ep.soundcloudEmbed || ep.spotifyUrl || ep.listenUrl) {
+            /* SoundCloud iframe embed */
+            if (ep.soundcloudEmbed) {
+              expandedHtml += '<div class="episode-embed-wrap"><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" loading="lazy" title="Episode audio player" src="' + ep.soundcloudEmbed + '"></iframe></div>';
+            }
+
+            expandedHtml += '<div class="episode-listen-cards">';
+            if (ep.listenUrl) {
+              expandedHtml += '<a class="episode-listen-card" data-episode-platform="afropop" href="' + ep.listenUrl + '" target="_blank" rel="noopener noreferrer">' +
+                '<div class="listen-card-icon">' + afroSvg + '</div>' +
+                '<div class="listen-card-text"><span class="listen-card-label">Listen on</span><span class="listen-card-platform">Afropop Worldwide</span></div>' +
+                '<svg class="listen-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>' +
+              '</a>';
+            }
+            if (ep.spotifyUrl) {
+              expandedHtml += '<a class="episode-listen-card listen-card-sp" data-episode-platform="spotify" href="' + ep.spotifyUrl + '" target="_blank" rel="noopener noreferrer">' +
+                '<div class="listen-card-icon">' + spotifySvg + '</div>' +
+                '<div class="listen-card-text"><span class="listen-card-label">Listen on</span><span class="listen-card-platform">Spotify</span></div>' +
+                '<svg class="listen-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>' +
+              '</a>';
+            }
+            expandedHtml += '</div>';
+          }
+
           item.innerHTML =
             '<div class="episode-item-text">' +
               '<span class="episode-item-number">EPISODE ' + ep.number + '</span>' +
               '<span class="episode-item-title">' + ep.title + '</span>' +
               '<span class="episode-item-date">AIRED ' + airDateFormatted + '</span>' +
               '<div class="episode-platforms">' +
-                '<a class="episode-platform-link" href="' + ep.listenUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Afropop">' + afroSvg + 'Afropop</a>' +
-                (ep.spotifyUrl ? '<a class="episode-platform-link" href="' + ep.spotifyUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Spotify">' + spotifySvg + 'Spotify</a>' : '') +
-                (ep.appleUrl ? '<a class="episode-platform-link" href="' + ep.appleUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Apple Podcasts">' + appleSvg + 'Apple</a>' : '') +
+                '<a class="episode-platform-link" data-episode-platform="afropop" href="' + ep.listenUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Afropop">' + afroSvg + 'Afropop</a>' +
+                (ep.spotifyUrl ? '<a class="episode-platform-link" data-episode-platform="spotify" href="' + ep.spotifyUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Spotify">' + spotifySvg + 'Spotify</a>' : '') +
+                (ep.appleUrl ? '<a class="episode-platform-link" data-episode-platform="apple" href="' + ep.appleUrl + '" target="_blank" rel="noopener noreferrer" title="Listen on Apple Podcasts">' + appleSvg + 'Apple</a>' : '') +
               '</div>' +
+              expandedHtml +
             '</div>' +
             playSvg;
-          /* Prevent the parent <a> from navigating; let individual platform links handle it */
-          item.removeAttribute('href');
-          item.style.cursor = 'default';
-          item.querySelectorAll('.episode-platform-link').forEach(pl => {
-            pl.addEventListener('click', (e) => {
-              e.stopPropagation();
-              trackEvent('episode_click', { episode_id: ep.id, episode_title: ep.title, platform: pl.textContent.trim().toLowerCase() });
-            });
-          });
+          bindEpisodeLinkTracking(item, ep);
         } else {
           /* Future locked episode */
           const dateLabel = 'AIRS ' + airDateFormatted;
@@ -2902,7 +3143,7 @@
 
       /* Live countdown ticker */
       if (nextCountdownEl) {
-        const airTarget = new Date(nextCountdownEl.dataset.air + 'T12:00:00-05:00').getTime();
+        const airTarget = Number(nextCountdownEl.dataset.airTarget);
         const dEl = nextCountdownEl.querySelector('[data-d]');
         const hEl = nextCountdownEl.querySelector('[data-h]');
         const mEl = nextCountdownEl.querySelector('[data-m]');
