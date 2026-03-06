@@ -81,7 +81,7 @@
 - [x] Verify aired/upcoming gating logic against Eastern Time, including DST behavior after March 8, 2026.
 - [x] Verify the expanded aired episode card in-browser on desktop and mobile (description, SoundCloud embed, listen cards, scrolling, centering).
 - [x] Fix any confirmed regressions or HTML/runtime issues with the minimum necessary change.
-- [ ] Re-run verification, update this review section with findings, and push the verified branch to GitHub.
+- [x] Re-run verification, update this review section with findings, and push the verified branch to GitHub.
 
 ## Review
 - In code review, found three concrete regression risks in Claude's patch: fixed `-05:00` offsets broke post-DST unlock timing, aired date labels shifted backward for viewers west of Eastern Time, and aired cards still rendered as outer anchors containing inner links.
@@ -89,17 +89,3 @@
 - Added `encrypted-media` to the SoundCloud iframe `allow` attribute and a title so the embed no longer throws console errors during browser verification.
 - Verified in a real Chromium session with frozen clocks at March 5 12:30 AM ET and March 12 12:30 AM ET/9:30 PM PT, plus mobile viewports `390x844` and `320x568`.
 - Verification results: root `/` still redirects to `/artist_profiles.html`; the March 5 episode is aired at the start of March 5; the March 12 episode is aired at the start of March 12 after DST begins; LA still shows `AIRED MAR 12`; the expanded card renders its description, SoundCloud player, and two listen cards; mobile overflow stays scrollable with no console/page errors.
-
----
-
-# Claude Episode Hub Verification Plan (2026-03-06)
-
-- [x] Inspect Claude's uncommitted `artist_profiles.html` diff and identify code-paths affected by the episode hub changes.
-- [ ] Verify aired vs upcoming episode logic against Eastern Time behavior, including the March DST boundary.
-- [ ] Verify desktop and mobile episode hub layout, scrollability, and expanded-card interactions in a real browser.
-- [ ] Check the SoundCloud iframe and listen cards for markup/runtime regressions and broken interaction patterns.
-- [ ] Fix any confirmed regressions or edge-case bugs with the minimum change set required.
-- [ ] Re-run verification after fixes, document outcomes, and push the verified branch to GitHub.
-
-## Review
-- Pending.
