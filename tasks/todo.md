@@ -9,9 +9,10 @@
 - Completed on March 13, 2026.
 - Root cause: the episode hub is hardcoded, and the March 12 entry used a stub Afropop URL (`/audio-programs/cheikha-rimitti`) instead of the canonical published episode page (`/audio-programs/cheikha-rimitti-rebel-queen-of-algerian-music`). The March 19 entry also used a shortened non-canonical slug.
 - Updated `artist_profiles.html` so all March 2026 episode entries use canonical `www.afropop.org` episode URLs, and added published descriptions/SoundCloud embeds for the March 12, March 19, and March 26 entries.
+- Follow-up: added the live Afropop Worldwide Spotify show URL to the March 12 Cheikha Rimitti entry and replaced the stale Subscribe-row Spotify link with the same working show URL.
 - Browser verification on March 13, 2026 at `http://127.0.0.1:4173/artist_profiles.html` confirmed the hub now shows:
   - Episode 705 aired on March 5 with its existing expanded content.
-  - Episode 870 aired on March 12 with the correct Cheikha Rimitti title, description, embed, and canonical Afropop link.
+  - Episode 870 aired on March 12 with the correct Cheikha Rimitti title, description, embed, canonical Afropop link, and Spotify link.
   - Episode 731 as the next upcoming episode on March 19 with the corrected canonical title.
 - Runtime verification found no episode-hub JavaScript regressions. One unrelated pre-existing local `404` asset request still appears in the browser console during page load and was not part of this fix.
 
